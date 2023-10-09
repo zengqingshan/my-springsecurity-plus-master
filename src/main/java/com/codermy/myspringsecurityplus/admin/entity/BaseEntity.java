@@ -22,6 +22,10 @@ public abstract class BaseEntity implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd  HH:mm:ss")
     private Date updateTime = new Date();
 
+    private String createBy;
+    private String updateBy;
+    private Integer enabled = 1;
+
     /** 请求参数 */
     private Map<String, Object> params;
     public Map<String, Object> getParams()

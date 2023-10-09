@@ -10,10 +10,10 @@ import com.codermy.myspringsecurityplus.common.utils.Result;
  */
 public interface UserService {
     /**
-     * 返回用户列表
-     * @param offectPosition
-     * @param limit
-     * @param myUser
+     * 返回用户列表，包含模糊查询功能
+     * @param offectPosition  开始查询页面
+     * @param limit    每页限制大小
+     * @param myUser   当需要模糊查询时，封装成实体对象再进行查询
      * @return
      */
     Result<MyUser> getAllUsersByPage(Integer offectPosition, Integer limit, MyUser myUser);

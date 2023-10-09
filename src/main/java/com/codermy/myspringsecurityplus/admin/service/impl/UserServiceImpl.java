@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserJobDao userJobDao;
 
+    // 获取所有用户
     @Override
     @DataPermission(deptAlias = "d", userAlias = "u")
     public Result<MyUser> getAllUsersByPage(Integer offectPosition, Integer limit, MyUser myUser) {
@@ -49,11 +50,13 @@ public class UserServiceImpl implements UserService {
         return Result.ok().count(page.getTotal()).data(fuzzyUserByPage).code(ResultCode.TABLE_SUCCESS);
     }
 
+    // 根据用户ID获取用户信息
     @Override
     public MyUser getUserById(Integer userId) {
         return userDao.getUserById(userId);
     }
 
+    // 校验用户是否允许操作
     @Override
     public void checkUserAllowed(MyUser user) {
         if (!StringUtils.isEmpty(user.getUserId()) && user.isAdmin())

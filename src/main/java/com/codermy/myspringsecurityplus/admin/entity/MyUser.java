@@ -17,6 +17,8 @@ public class MyUser extends BaseEntity{
 
     private Integer userId;
 
+    private Integer type;
+
     private Integer deptId;
 
     private String userName;

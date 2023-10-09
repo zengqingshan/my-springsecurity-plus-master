@@ -4,13 +4,13 @@ spring:
   profiles:
     active: dev
   application:
-    name: my-springsecurity-plus
+    name: jayd-outside-applet
   datasource:
     driver:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/my-springsecurity-plus?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:1433/jayd_outside_applet?serverTimezone=Asia/Shanghai
     username: root
-    password: root
+    password: shm1008612
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       # 初始化配置

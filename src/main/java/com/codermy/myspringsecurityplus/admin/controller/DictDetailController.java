@@ -1,13 +1,11 @@
 package com.codermy.myspringsecurityplus.admin.controller;
 
-import com.codermy.myspringsecurityplus.admin.entity.MyDict;
-import com.codermy.myspringsecurityplus.admin.entity.MyDictDetail;
-import com.codermy.myspringsecurityplus.admin.entity.MyJob;
+import com.codermy.myspringsecurityplus.admin.entity.SysDictDetail;
+import com.codermy.myspringsecurityplus.admin.entity.SysJob;
 import com.codermy.myspringsecurityplus.admin.service.DictDetailService;
 import com.codermy.myspringsecurityplus.common.exceptionhandler.MyException;
 import com.codermy.myspringsecurityplus.common.utils.PageTableRequest;
 import com.codermy.myspringsecurityplus.common.utils.Result;
-import com.codermy.myspringsecurityplus.common.utils.UserConstants;
 import com.codermy.myspringsecurityplus.log.aop.MyLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,8 +14,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/api/dictDetail")
@@ -38,8 +34,8 @@ public class DictDetailController {
     @GetMapping("/add")
     @ApiOperation(value = "添加字典详情页面")
     @PreAuthorize("hasAnyAuthority('dict:add')")
-    public String addDictDetail(Model model,MyDictDetail myDictDetail){
-        model.addAttribute("MyDictDetail",myDictDetail);
+    public String addDictDetail(Model model, SysDictDetail sysDictDetail){
+        model.addAttribute("MyDictDetail", sysDictDetail);
         return "/system/dict/dict-detail-add";
     }
 
@@ -48,15 +44,15 @@ public class DictDetailController {
     @ApiOperation(value = "添加字典详情")
     @PreAuthorize("hasAnyAuthority('dict:add')")
     @MyLog("添加字典详情")
-    public Result saveDictDetail(@RequestBody MyDictDetail myDictDetail){
-        return Result.judge(detailService.insertDictDetail(myDictDetail),"添加字典详情");
+    public Result saveDictDetail(@RequestBody SysDictDetail sysDictDetail){
+        return Result.judge(detailService.insertDictDetail(sysDictDetail),"添加字典详情");
     }
 
     @GetMapping(value = "/edit")
     @ApiOperation(value = "修改字典详情页面")
     @PreAuthorize("hasAnyAuthority('dict:edit')")
-    public String editDictDetail(Model model, MyDictDetail myDictDetail) {
-        model.addAttribute("MyDictDetail",detailService.getDictDetailById(myDictDetail.getId()));
+    public String editDictDetail(Model model, SysDictDetail sysDictDetail) {
+        model.addAttribute("MyDictDetail",detailService.getDictDetailById(sysDictDetail.getId()));
         return "system/dict/dict-detail-edit";
     }
 
@@ -65,15 +61,15 @@ public class DictDetailController {
     @ApiOperation(value = "修改字典详情")
     @PreAuthorize("hasAnyAuthority('dict:edit')")
     @MyLog("修改字典详情")
-    public Result updateDictDetail(@RequestBody MyDictDetail myDictDetail){
-        return Result.judge(detailService.updateDictDetail(myDictDetail),"修改字典详情");
+    public Result updateDictDetail(@RequestBody SysDictDetail sysDictDetail){
+        return Result.judge(detailService.updateDictDetail(sysDictDetail),"修改字典详情");
     }
 
     @DeleteMapping
     @ResponseBody
     @ApiOperation(value = "删除字典详情")
     @PreAuthorize("hasAnyAuthority('dict:del')")
-    public Result<MyJob> deleteDict(String ids) {
+    public Result<SysJob> deleteDict(String ids) {
         try {
             detailService.deleteDictDetailByIds(ids);
             return Result.ok().message("删除成功");

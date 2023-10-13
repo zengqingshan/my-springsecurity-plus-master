@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @createTime 2020/8/23
  */
 @Data
-public class MyRoleDept implements Serializable {
+public class SysRoleDept extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 8925514042332235875L;
 

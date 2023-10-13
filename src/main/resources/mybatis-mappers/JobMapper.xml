@@ -4,11 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.codermy.myspringsecurityplus.admin.dao.JobDao">
     <sql id="selectJobVo">
-        select j.job_id,j.job_name,j.sort,j.status,j.create_time,j.update_time
-        from my_job j
+        select j.job_id,j.job_name,j.sort,j.status,j.create_by,j.create_time,j.update_by,j.update_time,j.enabled
+        from sys_job j
     </sql>
 
-    <select id="getFuzzyJob" resultType="com.codermy.myspringsecurityplus.admin.entity.MyJob">
+    <select id="getFuzzyJob" resultType="com.codermy.myspringsecurityplus.admin.entity.SysJob">
         <include refid="selectJobVo"/>
         <where>
             <if test="queryName != null and queryName != ''">
@@ -17,43 +17,51 @@
             <if test="queryStatus!= null and queryStatus != ''">
                 AND j.status = #{queryStatus}
             </if>
+            AND j.enabled = 1
         </where>
         order by j.sort
     </select>
 
 
-    <select id="checkJobNameUnique" parameterType="String" resultType="com.codermy.myspringsecurityplus.admin.entity.MyJob">
+    <select id="checkJobNameUnique" parameterType="String" resultType="com.codermy.myspringsecurityplus.admin.entity.SysJob">
         <include refid="selectJobVo"/>
-        where j.job_name= #{jobName} limit 1
+        where j.job_name= #{jobName} AND j.enabled = 1 limit 1
     </select>
 
 
-    <delete id="deleteJobByIds" parameterType="integer">
-        delete from my_job where job_id in
-        <foreach collection="array" item="jobId" open="(" separator="," close=")">
+<!--    <delete id="deleteJobByIds" parameterType="integer">-->
+<!--        delete from my_job where job_id in-->
+<!--        <foreach collection="array" item="jobId" open="(" separator="," close=")">-->
+<!--            #{jobId}-->
+<!--        </foreach>-->
+<!--    </delete>-->
+    <update id="deleteJobByIds" parameterType="integer">
+        update sys_job
+        set enabled = 0
+        where job_id in
+        <foreach collection="array" item="jobId" open="(" separator="," close=")">-->
             #{jobId}
         </foreach>
-    </delete>
+    </update>
 
-    <select id="selectJobsByUserId" parameterType="integer" resultType="com.codermy.myspringsecurityplus.admin.entity.MyJob">
+    <select id="selectJobsByUserId" parameterType="integer" resultType="com.codermy.myspringsecurityplus.admin.entity.SysJob">
 		SELECT j.job_id, j.job_name,j.status
-		FROM my_user u
-			 LEFT JOIN my_user_job uj ON u.user_id = uj.user_id
-			 LEFT JOIN my_job j ON uj.job_id = j.job_id
-		WHERE uj.user_id = #{userId}
+		FROM sys_user u
+			 LEFT JOIN sys_user_job uj ON u.user_id = uj.user_id
+			 LEFT JOIN sys_job j ON uj.job_id = j.job_id
+		WHERE uj.user_id = #{userId} AND u.user_id = 1
 	</select>
 
-    <select id="selectJobAll" resultType="com.codermy.myspringsecurityplus.admin.entity.MyJob">
+    <select id="selectJobAll" resultType="com.codermy.myspringsecurityplus.admin.entity.SysJob">
         <include refid="selectJobVo"/>
     </select>
 
-    <update id="updateJob" parameterType="com.codermy.myspringsecurityplus.admin.entity.MyJob">
-        update my_job
+    <update id="updateJob" parameterType="com.codermy.myspringsecurityplus.admin.entity.SysJob">
+        update sys_job
         <set>
             <if test="jobName != null and jobName != ''">job_name = #{jobName},</if>
             <if test="status != null">status = #{status},</if>
             <if test="sort != null and sort != ''">sort = #{sort},</if>
-            update_time = #{updateTime}
         </set>
         where job_id = #{jobId}
     </update>

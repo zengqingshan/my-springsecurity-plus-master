@@ -7,7 +7,7 @@ import lombok.Data;
  * @createTime 2020/8/19
  */
 @Data
-public class MyJob extends BaseEntity {
+public class SysJob extends BaseEntity {
     private static final long serialVersionUID = 8925514045582234222L;
 
     private Integer jobId;

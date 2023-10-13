@@ -1,10 +1,7 @@
 package com.codermy.myspringsecurityplus.admin.dao;
 
-import com.codermy.myspringsecurityplus.admin.entity.MyDictDetail;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import com.codermy.myspringsecurityplus.admin.entity.SysDictDetail;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -19,30 +16,30 @@ import java.util.List;
 @Mapper
 public interface DictDetailDao {
 
-    List<MyDictDetail> getDictDetail(Integer dictId);
+    List<SysDictDetail> getDictDetail(Integer dictId);
     /**
      * 插入字典详情
-     * @param myDictDetail
+     * @param sysDictDetail
      * @return
      */
-    @Insert("INSERT INTO my_dict_detail(dict_id,label,value, sort,create_time, update_time)values(#{dictId},#{label},#{value},#{sort}, now(), now())")
-    int insertDictDetail(MyDictDetail myDictDetail);
+    @Insert("INSERT INTO sys_dict_detail(dict_id,label,value, sort, enabled)values(#{dictId},#{label},#{value},#{sort},#{enabled})")
+    int insertDictDetail(SysDictDetail sysDictDetail);
 
     /**
      * 通过id获得字典详情信息
      * @param id
      * @return
      */
-    @Select("select did.id,did.dict_id,did.label,did.value,did.sort,did.create_time,did.update_time from my_dict_detail did  where did.id = #{id}")
-    MyDictDetail getDictDetailById(Integer id);
+    @Select("select did.id,did.dict_id,did.label,did.value,did.sort,did.create_by,did.create_time,did.update_by,did.update_time,did.enabled from sys_dict_detail did  where did.id = #{id} AND did.enabled = 1")
+    SysDictDetail getDictDetailById(Integer id);
 
     /**
      * 修改保存字典详情信息
      *
-     * @param myDictDetail 岗位信息
+     * @param sysDictDetail 岗位信息
      * @return 结果
      */
-    int updateDictDetail(MyDictDetail myDictDetail);
+    int updateDictDetail(SysDictDetail sysDictDetail);
 
     /**
      * 批量删除字典详情
@@ -55,9 +52,8 @@ public interface DictDetailDao {
     /**
      *
      * 根据字典id删除字典详情
-     * @param id
+     * @param dictId 字典ID
      * @return
      */
-    @Delete("DELETE from my_dict_detail where dict_id = #{dictId}")
     int deleteDictDetailByDictId(Integer dictId);
 }

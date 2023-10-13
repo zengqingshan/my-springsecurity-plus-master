@@ -5,7 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.codermy.myspringsecurityplus.admin.dao.JobDao;
 import com.codermy.myspringsecurityplus.admin.dao.UserJobDao;
 import com.codermy.myspringsecurityplus.admin.dto.JobQueryDto;
-import com.codermy.myspringsecurityplus.admin.entity.MyJob;
+import com.codermy.myspringsecurityplus.admin.entity.SysJob;
 import com.codermy.myspringsecurityplus.admin.service.JobService;
 import com.codermy.myspringsecurityplus.common.exceptionhandler.MyException;
 import com.codermy.myspringsecurityplus.common.utils.Result;
@@ -15,7 +15,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -31,14 +30,14 @@ public class JobServiceImpl implements JobService {
     private UserJobDao userJobDao;
 
     @Override
-    public Result<MyJob> getJobAll(Integer offectPosition, Integer limit, JobQueryDto jobQueryDto) {
+    public Result<SysJob> getJobAll(Integer offectPosition, Integer limit, JobQueryDto jobQueryDto) {
         Page page = PageHelper.offsetPage(offectPosition,limit);
-        List<MyJob> fuzzyJob = jobDao.getFuzzyJob(jobQueryDto.getQueryName(), jobQueryDto.getQueryStatus());
+        List<SysJob> fuzzyJob = jobDao.getFuzzyJob(jobQueryDto.getQueryName(), jobQueryDto.getQueryStatus());
         return Result.ok().count(page.getTotal()).data(fuzzyJob).code(ResultCode.TABLE_SUCCESS);
     }
 
     @Override
-    public int insertJob(MyJob job) {
+    public int insertJob(SysJob job) {
         return jobDao.insertDept(job);
     }
 
@@ -49,8 +48,8 @@ public class JobServiceImpl implements JobService {
      * @return 结果
      */
     @Override
-    public String checkJobNameUnique(MyJob job) {
-        MyJob info = jobDao.checkJobNameUnique(job.getJobName());
+    public String checkJobNameUnique(SysJob job) {
+        SysJob info = jobDao.checkJobNameUnique(job.getJobName());
         if (ObjectUtil.isNotEmpty(info) && !info.getJobId().equals (job.getJobId())){
             return UserConstants.JOB_NAME_NOT_UNIQUE;
         }
@@ -58,7 +57,7 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public MyJob getJobById(Integer jobId) {
+    public SysJob getJobById(Integer jobId) {
         return jobDao.getJobById(jobId);
     }
 
@@ -66,7 +65,7 @@ public class JobServiceImpl implements JobService {
     public int deleteJobByIds(String ids) throws MyException {
         Integer[] jobIds = Convert.toIntArray(ids);
         for (Integer jobid:jobIds){
-            MyJob job = getJobById(jobid);
+            SysJob job = getJobById(jobid);
             if (countUserJobtById(jobid)>0){
                 throw new MyException(ResultCode.ERROR,job.getJobName()+ "已分配,不能删除");
             }
@@ -80,17 +79,17 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<MyJob> selectJobAll() {
+    public List<SysJob> selectJobAll() {
         return jobDao.selectJobAll();
     }
 
     @Override
-    public List<MyJob> selectJobsByUserId(Integer userId) {
-        List<MyJob> userJobs = jobDao.selectJobsByUserId(userId);
-        List<MyJob>jobs =jobDao.selectJobAll();
-        for (MyJob job : jobs)
+    public List<SysJob> selectJobsByUserId(Integer userId) {
+        List<SysJob> userJobs = jobDao.selectJobsByUserId(userId);
+        List<SysJob>jobs =jobDao.selectJobAll();
+        for (SysJob job : jobs)
         {
-            for (MyJob userJob : userJobs)
+            for (SysJob userJob : userJobs)
             {
                 if (job.getJobId().equals(userJob.getJobId()))
                 {
@@ -103,12 +102,12 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public int updateJob(MyJob myJob) {
-        return jobDao.updateJob(myJob);
+    public int updateJob(SysJob sysJob) {
+        return jobDao.updateJob(sysJob);
     }
 
     @Override
-    public int changeStatus(MyJob myJob) {
-        return jobDao.updateJob(myJob);
+    public int changeStatus(SysJob sysJob) {
+        return jobDao.updateJob(sysJob);
     }
 }

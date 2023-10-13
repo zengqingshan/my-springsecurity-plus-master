@@ -2,8 +2,8 @@ package com.codermy.myspringsecurityplus.admin.service.impl;
 
 import cn.hutool.core.convert.Convert;
 import com.codermy.myspringsecurityplus.admin.dao.DictDetailDao;
-import com.codermy.myspringsecurityplus.admin.entity.MyDict;
-import com.codermy.myspringsecurityplus.admin.entity.MyDictDetail;
+import com.codermy.myspringsecurityplus.admin.entity.SysDict;
+import com.codermy.myspringsecurityplus.admin.entity.SysDictDetail;
 import com.codermy.myspringsecurityplus.admin.service.DictDetailService;
 import com.codermy.myspringsecurityplus.admin.service.DictService;
 import com.codermy.myspringsecurityplus.common.utils.Result;
@@ -12,7 +12,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,32 +24,32 @@ public class DictDetailServiceImpl implements DictDetailService {
     private DictDetailDao dictDetailDao;
 
     @Override
-    public Result<MyDictDetail> getDictByName(Integer offectPosition, Integer limit,String dictName) {
-        MyDict dictByName =dictService.getDictByName(dictName);
+    public Result<SysDictDetail> getDictByName(Integer offectPosition, Integer limit, String dictName) {
+        SysDict dictByName =dictService.getDictByName(dictName);
         Integer dictId = dictByName.getDictId();
         Page page = PageHelper.offsetPage(offectPosition,limit);
-        List<MyDictDetail> fuzzyDictDetailByPage = getDictDetail(dictId);
+        List<SysDictDetail> fuzzyDictDetailByPage = getDictDetail(dictId);
         return Result.ok().count(page.getTotal()).data(fuzzyDictDetailByPage).code(ResultCode.TABLE_SUCCESS);
     }
 
     @Override
-    public List<MyDictDetail> getDictDetail(Integer dictId) {
+    public List<SysDictDetail> getDictDetail(Integer dictId) {
         return dictDetailDao.getDictDetail(dictId);
     }
 
     @Override
-    public int insertDictDetail(MyDictDetail myDictDetail) {
-        return dictDetailDao.insertDictDetail(myDictDetail);
+    public int insertDictDetail(SysDictDetail sysDictDetail) {
+        return dictDetailDao.insertDictDetail(sysDictDetail);
     }
 
     @Override
-    public MyDictDetail getDictDetailById(Integer id) {
+    public SysDictDetail getDictDetailById(Integer id) {
         return dictDetailDao.getDictDetailById(id);
     }
 
     @Override
-    public int updateDictDetail(MyDictDetail myDictDetail) {
-        return dictDetailDao.updateDictDetail(myDictDetail);
+    public int updateDictDetail(SysDictDetail sysDictDetail) {
+        return dictDetailDao.updateDictDetail(sysDictDetail);
     }
 
     @Override

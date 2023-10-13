@@ -29,7 +29,7 @@ public class VerifyCodeFilter extends OncePerRequestFilter {
             // 登录请求校验验证码，非登录请求不用校验
             HttpSession session = request.getSession();
             String requestCaptcha = request.getParameter("captcha");
-            //验证码的信息存放在seesion种，具体看EasyCaptcha官方解释
+            //验证码的信息存放在seesion中，具体看EasyCaptcha官方解释
             String genCaptcha = (String) request.getSession().getAttribute("captcha");
             response.setContentType("application/json;charset=UTF-8");
             if (StrUtil.isEmpty(requestCaptcha)){

@@ -122,6 +122,17 @@
             <artifactId>oshi-core</artifactId>
             <version>4.4.2</version>
         </dependency>
+        <!-- mybatis-plus -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.baomidou</groupId>-->
+<!--            <artifactId>mybatis-plus</artifactId>-->
+<!--            <version>3.4</version>-->
+<!--        </dependency>-->
 
         <!--ip2region，这是根据ip查地址的工具，有兴趣自己可以了解-->
         <!-- <dependency>-->

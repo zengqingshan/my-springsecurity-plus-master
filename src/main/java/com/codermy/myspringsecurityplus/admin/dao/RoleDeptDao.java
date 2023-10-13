@@ -3,6 +3,7 @@ package com.codermy.myspringsecurityplus.admin.dao;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface RoleDeptDao {
      * @param roleId
      * @return
      */
-    @Delete("delete from my_role_dept where role_id = #{roleId}")
+    @Update("UPDATE sys_role_dept SET enabled = 0 WHERE role_id = #{roleId}")
     int deleteRoleDept(Integer roleId);
 
     /**

@@ -3,7 +3,6 @@ package com.codermy.myspringsecurityplus.common.utils;
 
 
 
-import com.codermy.myspringsecurityplus.admin.entity.MyUser;
 import com.codermy.myspringsecurityplus.common.exceptionhandler.MyException;
 import com.codermy.myspringsecurityplus.security.dto.JwtUserDto;
 import org.springframework.security.core.Authentication;

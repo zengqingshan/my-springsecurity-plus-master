@@ -1,11 +1,8 @@
 package com.codermy.myspringsecurityplus.admin.service;
 
-import com.codermy.myspringsecurityplus.admin.entity.MyDict;
-import com.codermy.myspringsecurityplus.admin.entity.MyUser;
+import com.codermy.myspringsecurityplus.admin.entity.SysDict;
 import com.codermy.myspringsecurityplus.common.exceptionhandler.MyException;
 import com.codermy.myspringsecurityplus.common.utils.Result;
-
-import java.util.List;
 
 public interface DictService {
 
@@ -13,44 +10,44 @@ public interface DictService {
      * 分页返回字典
      * @return
      */
-    Result<MyDict> getDictPage(Integer offectPosition, Integer limit, MyDict myDict);
+    Result<SysDict> getDictPage(Integer offectPosition, Integer limit, SysDict sysDict);
 
     /**
      * 通过字典名获取字典
      * @param dictName
      * @return
      */
-    MyDict getDictByName(String dictName);
+    SysDict getDictByName(String dictName);
 
     /**
      * 校验字典名称
      *
-     * @param myDict 岗位信息
+     * @param sysDict 岗位信息
      * @return 结果
      */
-    String checkDictNameUnique(MyDict myDict);
+    String checkDictNameUnique(SysDict sysDict);
 
     /**
      * 新增字典信息
-     * @param myDict 岗位信息
+     * @param sysDict 岗位信息
      * @return 结果
      */
-    int insertDict(MyDict myDict);
+    int insertDict(SysDict sysDict);
 
     /**
      * 通过id获得字典信息
      * @param dictId
      * @return
      */
-    MyDict getDictById(Integer dictId);
+    SysDict getDictById(Integer dictId);
 
     /**
      * 修改保存自带你信息
      *
-     * @param myDict 岗位信息
+     * @param sysDict 岗位信息
      * @return 结果
      */
-    int updateDict(MyDict myDict);
+    int updateDict(SysDict sysDict);
 
     /**
      * 批量删除岗位信息

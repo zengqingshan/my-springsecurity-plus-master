@@ -1,7 +1,5 @@
 package com.codermy.myspringsecurityplus.common.utils;
 
-import com.codermy.myspringsecurityplus.admin.entity.MyUser;
-
 /**
  * 用户常量信息
  * @author codermy

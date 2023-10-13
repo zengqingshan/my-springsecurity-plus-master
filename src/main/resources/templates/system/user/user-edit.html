@@ -11,20 +11,20 @@
     <div class="mainBox">
         <div class="main-container">
             <div class="main-container">
-                <input type="hidden" id="userId" name="userId" th:value="${myUser.userId}">
+                <input type="hidden" id="userId" name="userId" th:value="${sysUser.userId}">
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                         <span style="color: red">*</span>用户名
                     </label>
                     <div class="layui-input-block">
-                        <input type="text" id="userName" th:value="${myUser.userName}" name="userName" lay-verify="required" autocomplete="off" class="layui-input">
+                        <input type="text" id="userName" th:value="${sysUser.userName}" name="userName" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                         <span style="color: red">*</span>昵称</label>
                     <div class="layui-input-block">
-                        <input type="text" id="nickName" th:value="${myUser.nickName}" name="nickName" required="" lay-verify="nikename" autocomplete="off" class="layui-input">
+                        <input type="text" id="nickName" th:value="${sysUser.nickName}" name="nickName" required="" lay-verify="nikename" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -32,7 +32,7 @@
                         <span style="color: red">*</span>手机
                     </label>
                     <div class="layui-input-block">
-                        <input type="text" id="phone" th:value="${myUser.phone}" name="phone" required="" lay-verify="phone" autocomplete="off" class="layui-input">
+                        <input type="text" id="phone" th:value="${sysUser.phone}" name="phone" required="" lay-verify="phone" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -40,14 +40,14 @@
                         <span style="color: red">*</span>邮箱
                     </label>
                     <div class="layui-input-block">
-                        <input type="text"  name="email" th:value="${myUser.email}"lay-verify="email" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                        <input type="text"  name="email" th:value="${sysUser.email}"lay-verify="email" autocomplete="off" placeholder="请输入标题" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">类型</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="status" value="1" title="激活"  th:checked="${myUser.status == 1}? 'true':'false'">
-                        <input type="radio" name="status" value="0" title="禁用" th:checked="${myUser.status == 0}? 'true':'false'">
+                        <input type="radio" name="status" value="1" title="激活"  th:checked="${sysUser.status == 1}? 'true':'false'">
+                        <input type="radio" name="status" value="0" title="禁用" th:checked="${sysUser.status == 0}? 'true':'false'">
                     </div>
                 </div>
                 <input type="text" id="roleId"  name="roleId" style="display:none;"/>
@@ -59,8 +59,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">部门</label>
                     <div class="layui-input-block">
-                        <input type="number" id="deptId" th:value="${myUser.deptId}" name="deptId"  lay-verify="deptId" style="display:none;width: 0px" autocomplete="off" class="layui-input">
-                        <ul id="dataTree" class="dtree" data-id="0" th:data-value="${myUser.deptId}"></ul>
+                        <input type="number" id="deptId" th:value="${sysUser.deptId}" name="deptId"  lay-verify="deptId" style="display:none;width: 0px" autocomplete="off" class="layui-input">
+                        <ul id="dataTree" class="dtree" data-id="0" th:data-value="${sysUser.deptId}"></ul>
                     </div>
                 </div>
                 <div class="layui-form-item">

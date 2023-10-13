@@ -1,7 +1,7 @@
 package com.codermy.myspringsecurityplus.admin.service;
 
 
-import com.codermy.myspringsecurityplus.admin.entity.MyUser;
+import com.codermy.myspringsecurityplus.admin.entity.SysUser;
 import com.codermy.myspringsecurityplus.common.utils.Result;
 
 /**
@@ -13,46 +13,46 @@ public interface UserService {
      * 返回用户列表，包含模糊查询功能
      * @param offectPosition  开始查询页面
      * @param limit    每页限制大小
-     * @param myUser   当需要模糊查询时，封装成实体对象再进行查询
+     * @param sysUser   当需要模糊查询时，封装成实体对象再进行查询
      * @return
      */
-    Result<MyUser> getAllUsersByPage(Integer offectPosition, Integer limit, MyUser myUser);
+    Result<SysUser> getAllUsersByPage(Integer offectPosition, Integer limit, SysUser sysUser);
 
     /**
      * 根据id返回用户信息
      * @param id
      * @return
      */
-    MyUser getUserById(Integer id);
+    SysUser getUserById(Integer id);
 
     /**
      * 校验用户是否允许操作
      *
      * @param user 用户信息
      */
-    public void checkUserAllowed(MyUser user);
+    public void checkUserAllowed(SysUser user);
 
     /**
      * 通过手机查询用户
      * @param user
      * @return
      */
-    String checkPhoneUnique(MyUser user);
+    String checkPhoneUnique(SysUser user);
 
     /**
      * 通过用户名查询用户
      * @param user
      * @return
      */
-    String checkUserNameUnique(MyUser user);
+    String checkUserNameUnique(SysUser user);
 
     /**
      * 更新用户
-     * @param myUser
+     * @param sysUser
      * @param roleId
      * @return
      */
-    Result<MyUser> updateUser(MyUser myUser, Integer roleId);
+    Result<SysUser> updateUser(SysUser sysUser, Integer roleId);
 
     /**
      * 用户状态修改
@@ -60,15 +60,15 @@ public interface UserService {
      * @param user 用户信息
      * @return 结果
      */
-    int changeStatus(MyUser user);
+    int changeStatus(SysUser user);
 
     /**
      * 新建用户
-     * @param myUser
+     * @param sysUser
      * @param roleId
      * @return
      */
-    Result<MyUser> save(MyUser myUser, Integer roleId);
+    Result<SysUser> save(SysUser sysUser, Integer roleId);
 
     /**
      * 删除用户
@@ -81,5 +81,5 @@ public interface UserService {
      * @param userName
      * @return
      */
-    MyUser getUserByName(String userName);
+    SysUser getUserByName(String userName);
 }

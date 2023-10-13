@@ -10,31 +10,31 @@
             <div class="mainBox">
                 <div class="main-container">
                     <div class="main-container">
-                        <input type="text" id="menuId" th:value="${myMenu.menuId}" name="menuId" style="display:none;" autocomplete="off" class="layui-input">
+                        <input type="text" id="menuId" th:value="${sysMenu.menuId}" name="menuId" style="display:none;" autocomplete="off" class="layui-input">
                         <div class="layui-form-item">
                             <label class="layui-form-label">
                                 <span style="color: red">*</span>菜单名
                             </label>
                             <div class="layui-input-block">
-                                <input type="text" th:value="${myMenu.menuName}" name="menuName" lay-verify="menuName" autocomplete="off" placeholder="请输入菜单名" class="layui-input">
+                                <input type="text" th:value="${sysMenu.menuName}" name="menuName" lay-verify="menuName" autocomplete="off" placeholder="请输入菜单名" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">图标</label>
                             <div class="layui-input-block">
-                                <input type="text" id="iconPicker" name="icon" class="hide" th:value="${myMenu.icon}">
+                                <input type="text" id="iconPicker" name="icon" class="hide" th:value="${sysMenu.icon}">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">路径</label>
                             <div class="layui-input-block">
-                                <input type="text"  name="url" th:value="${myMenu.url}" autocomplete="off" class="layui-input">
+                                <input type="text"  name="url" th:value="${sysMenu.url}" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">权限标识</label>
                             <div class="layui-input-block">
-                                <input type="text"  name="permission" th:value="${myMenu.permission}" autocomplete="off" class="layui-input">
+                                <input type="text"  name="permission" th:value="${sysMenu.permission}" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -42,16 +42,16 @@
                                 <span style="color: red">*</span>排序
                             </label>
                             <div class="layui-input-block">
-                                <input type="text"  name="sort" th:value="${myMenu.sort}" lay-verify="sort" autocomplete="off" placeholder="请输入排序值" class="layui-input">
+                                <input type="text"  name="sort" th:value="${sysMenu.sort}" lay-verify="sort" autocomplete="off" placeholder="请输入排序值" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">
                                 <span style="color: red">*</span>类型</label>
                             <div class="layui-input-block">
-                                <input type="radio" name="type" value="0" title="目录"  th:checked="${myMenu.type == 0}? 'true':'false'" lay-verify="radio">
-                                <input type="radio" name="type" value="1" title="菜单"  th:checked="${myMenu.type == 1}? 'true':'false'" lay-verify="radio">
-                                <input type="radio" name="type" value="2" title="按钮" th:checked="${myMenu.type == 2}? 'true':'false'" lay-verify="radio">
+                                <input type="radio" name="type" value="0" title="目录"  th:checked="${sysMenu.type == 0}? 'true':'false'" lay-verify="radio">
+                                <input type="radio" name="type" value="1" title="菜单"  th:checked="${sysMenu.type == 1}? 'true':'false'" lay-verify="radio">
+                                <input type="radio" name="type" value="2" title="按钮" th:checked="${sysMenu.type == 2}? 'true':'false'" lay-verify="radio">
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -59,8 +59,8 @@
                                 上级菜单
                             </label>
                             <div class="layui-input-block">
-                                <input type="number" id="parentId" th:value="${myMenu.parentId}" name="parentId"  lay-verify="parentId" style="display:none;width: 0px" autocomplete="off" class="layui-input">
-                                <ul id="dataTree" class="dtree" data-id="0" th:data-value="${myMenu.parentId}"></ul>
+                                <input type="number" id="parentId" th:value="${sysMenu.parentId}" name="parentId"  lay-verify="parentId" style="display:none;width: 0px" autocomplete="off" class="layui-input">
+                                <ul id="dataTree" class="dtree" data-id="0" th:data-value="${sysMenu.parentId}"></ul>
                             </div>
                         </div>
                     </div>

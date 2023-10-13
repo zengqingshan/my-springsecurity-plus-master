@@ -5,11 +5,11 @@
 <mapper namespace="com.codermy.myspringsecurityplus.admin.dao.DeptDao">
 
     <sql id="selectDeptVo">
-        select d.dept_id,d.parent_id,d.dept_name,d.sort,d.status,d.create_time,d.update_time
-        from my_dept d
+        select d.dept_id,d.parent_id,d.dept_name,d.sort,d.status,d.create_by,d.create_time,d.update_by,d.update_time,d.enabled
+        from sys_dept d
     </sql>
 
-    <select id="getFuzzyDept" resultType="com.codermy.myspringsecurityplus.admin.entity.MyDept">
+    <select id="getFuzzyDept" resultType="com.codermy.myspringsecurityplus.admin.entity.SysDept">
         <include refid="selectDeptVo"/>
         <where>
             <if test="deptName != null and deptName != ''">
@@ -18,6 +18,7 @@
             <if test="status != null and status != ''">
                 AND d.status = #{status}
             </if>
+            AND d.enabled = 1
             <!-- 数据范围过滤 -->
             ${params.dataScope}
         </where>
@@ -27,44 +28,45 @@
 
     <select id="buildAll" resultType="com.codermy.myspringsecurityplus.admin.dto.DeptDto">
         select d.dept_id as id,d.parent_id,d.dept_name as title
-            from my_dept d
+            from sys_dept d
         <where>
+            d.enabled = 1
             <!-- 数据范围过滤 -->
             ${params.dataScope}
         </where>
     </select>
 
 
-    <select id="selectDeptById" parameterType="integer" resultType="com.codermy.myspringsecurityplus.admin.entity.MyDept">
+    <select id="selectDeptById" parameterType="integer" resultType="com.codermy.myspringsecurityplus.admin.entity.SysDept">
 		select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.status,
-			(select s.dept_name from my_dept s where s.dept_id = d.parent_id) parent_name
-		from my_dept d
-		where d.dept_id = #{deptId}
+			(select s.dept_name from sys_dept s where s.dept_id = d.parent_id) parent_name
+		from sys_dept d
+		where d.dept_id = #{deptId} AND d.enabled = 1
 	</select>
 
-    <select id="checkDeptNameUnique" resultType="com.codermy.myspringsecurityplus.admin.entity.MyDept">
+    <select id="checkDeptNameUnique" resultType="com.codermy.myspringsecurityplus.admin.entity.SysDept">
         <include refid="selectDeptVo"/>
-        where dept_name= #{deptName} and parent_id = #{parentId} limit 1
+        where d.dept_name= #{deptName} and d.parent_id = #{parentId} AND d.enabled = 1 LIMIT 1
     </select>
 
-    <select id="selectChildrenDeptById" parameterType="integer" resultType="com.codermy.myspringsecurityplus.admin.entity.MyDept">
-		select * from my_dept where find_in_set(#{id}, ancestors)
+    <select id="selectChildrenDeptById" parameterType="integer" resultType="com.codermy.myspringsecurityplus.admin.entity.SysDept">
+		select * from sys_dept where find_in_set(#{id}, ancestors) AND enabled = 1
 	</select>
 
     <select id="selectRoleDeptTree" parameterType="integer" resultType="com.codermy.myspringsecurityplus.admin.dto.DeptDto">
 		select d.dept_id as id,d.parent_id,d.dept_name as title
-		from my_dept d
-			left join my_role_dept rd on d.dept_id = rd.dept_id
-		where rd.role_id = #{id}
+		from sys_dept d
+			left join sys_role_dept rd on d.dept_id = rd.dept_id
+		where rd.role_id = #{id} AND d.enabled = 1
 		order by d.parent_id
 	</select>
 
     <update id="updateDeptChildren" parameterType="java.util.List">
-        update my_dept set ancestors =
+        update sys_dept set ancestors =
         <foreach collection="depts" item="item" index="index"
                  separator=" " open="case dept_id" close="end">
             when #{item.id} then #{item.ancestors}
-        </foreach>
+        </foreach>,
         where id in
         <foreach collection="depts" item="item" index="index"
                  separator="," open="(" close=")">
@@ -73,44 +75,48 @@
     </update>
 
     <update id="updateDept">
-        update my_dept d
+        update sys_dept d
         <set>
             <if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
             <if test="deptName != null and deptName != ''"> `dept_name` = #{deptName},</if>
             <if test="ancestors != null and ancestors != ''">ancestors = #{ancestors},</if>
             <if test="sort != null">sort = #{sort},</if>
             <if test="status != null">status = #{status},</if>
-            update_time = #{updateTime}
         </set>
         where d.dept_id = #{deptId}
     </update>
 
-    <update id="updateDeptStatus" parameterType="com.codermy.myspringsecurityplus.admin.entity.MyDept">
-        update my_dept
+    <update id="updateDeptStatus" parameterType="com.codermy.myspringsecurityplus.admin.entity.SysDept">
+        update sys_dept
         <set>
             <if test="status != null and status != ''">status = #{status},</if>
-            update_time = #{updateTime}
         </set>
         where dept_id in (${ancestors})
     </update>
 
     <select id="selectNormalChildrenDeptById" parameterType="integer" resultType="int">
-		select count(*) from my_dept where status = 1 and find_in_set(#{dept_id}, ancestors)
+		select count(*) from sys_dept where status = 1 and enabled = 1 and find_in_set(#{dept_id}, ancestors)
 	</select>
 
-    <select id="selectDeptCount" parameterType="com.codermy.myspringsecurityplus.admin.entity.MyDept" resultType="int">
-        select count(1) from my_dept
+    <select id="selectDeptCount" parameterType="com.codermy.myspringsecurityplus.admin.entity.SysDept" resultType="int">
+        select count(1) from sys_dept
         <where>
             <if test="deptId != null and deptId != 0"> and dept_id = #{deptId} </if>
             <if test="parentId != null and parentId != 0"> and parent_id = #{parentId} </if>
+            AND enabled = 1
         </where>
     </select>
 
     <select id="checkDeptExistUser" parameterType="integer" resultType="int">
-		select count(1) from my_user where dept_id = #{deptId}
+		select count(1) from sys_user where dept_id = #{deptId} AND enabled = 1
 	</select>
 
-    <delete id="deleteDeptById" parameterType="integer">
-		delete from my_dept where dept_id =#{deptId}
-	</delete>
+    <update id="deleteDeptById" parameterType="integer">
+        update
+            sys_dept
+        set
+            enabled = 0
+        where
+            dept_id = #{deptId}
+    </update>
 </mapper>

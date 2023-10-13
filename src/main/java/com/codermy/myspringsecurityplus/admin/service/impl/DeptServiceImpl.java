@@ -4,10 +4,9 @@ import cn.hutool.core.util.ObjectUtil;
 import com.codermy.myspringsecurityplus.admin.annotation.DataPermission;
 import com.codermy.myspringsecurityplus.admin.dao.DeptDao;
 import com.codermy.myspringsecurityplus.admin.dto.DeptDto;
-import com.codermy.myspringsecurityplus.admin.entity.MyDept;
+import com.codermy.myspringsecurityplus.admin.entity.SysDept;
 import com.codermy.myspringsecurityplus.admin.service.DeptService;
 import com.codermy.myspringsecurityplus.common.exceptionhandler.MyException;
-import com.codermy.myspringsecurityplus.common.utils.Result;
 import com.codermy.myspringsecurityplus.common.utils.ResultCode;
 import com.codermy.myspringsecurityplus.common.utils.TreeUtil;
 import com.codermy.myspringsecurityplus.common.utils.UserConstants;
@@ -27,8 +26,8 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     @DataPermission(deptAlias = "d")
-    public List<MyDept> getDeptAll(MyDept myDept) {
-        return deptDao.getFuzzyDept(myDept);
+    public List<SysDept> getDeptAll(SysDept sysDept) {
+        return deptDao.getFuzzyDept(sysDept);
     }
 
     @Override
@@ -48,8 +47,8 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public int insertDept(MyDept dept) {
-        MyDept info = deptDao.selectDeptById(dept.getParentId());
+    public int insertDept(SysDept dept) {
+        SysDept info = deptDao.selectDeptById(dept.getParentId());
         if (UserConstants.DEPT_DISABLE.equals(info.getStatus().toString()))
         {
             throw new MyException(ResultCode.ERROR,"部门停用，不允许新增");
@@ -59,8 +58,8 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public String checkDeptNameUnique(MyDept dept) {
-        MyDept info = deptDao.checkDeptNameUnique(dept.getDeptName(),dept.getParentId());
+    public String checkDeptNameUnique(SysDept dept) {
+        SysDept info = deptDao.checkDeptNameUnique(dept.getDeptName(),dept.getParentId());
         if (ObjectUtil.isNotEmpty(info) && !info.getDeptId().equals(dept.getDeptId())){
             return UserConstants.DEPT_NAME_NOT_UNIQUE;
         }
@@ -69,19 +68,19 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public MyDept selectDeptById(Integer deptId) {
+    public SysDept selectDeptById(Integer deptId) {
         return deptDao.selectDeptById(deptId);
     }
 
     @Override
-    public MyDept getDeptById(Integer deptId) {
+    public SysDept getDeptById(Integer deptId) {
         return deptDao.getDeptById(deptId);
     }
 
     @Override
-    public int updateDept(MyDept dept) {
-        MyDept parentInfo = deptDao.selectDeptById(dept.getParentId());
-        MyDept oldInfo = selectDeptById(dept.getDeptId());
+    public int updateDept(SysDept dept) {
+        SysDept parentInfo = deptDao.selectDeptById(dept.getParentId());
+        SysDept oldInfo = selectDeptById(dept.getDeptId());
         if(ObjectUtil.isNotEmpty(parentInfo) &&ObjectUtil.isNotEmpty(oldInfo)){
             String newAncestors = parentInfo.getAncestors() + "," + parentInfo.getDeptId();
             String oldAncestors = oldInfo.getAncestors();
@@ -104,7 +103,7 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public int selectDeptCount(Integer parentId) {
-        MyDept dept =new MyDept();
+        SysDept dept =new SysDept();
         dept.setParentId(parentId);
         return deptDao.selectDeptCount(dept);
     }
@@ -121,8 +120,8 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public int changeStatus(MyDept myDept) {
-        return deptDao.updateDept(myDept);
+    public int changeStatus(SysDept sysDept) {
+        return deptDao.updateDept(sysDept);
     }
 
     /**
@@ -134,8 +133,8 @@ public class DeptServiceImpl implements DeptService {
      */
     public void updateDeptChildren(Integer id, String newAncestors, String oldAncestors)
     {
-        List<MyDept> children = deptDao.selectChildrenDeptById(id);
-        for (MyDept child : children)
+        List<SysDept> children = deptDao.selectChildrenDeptById(id);
+        for (SysDept child : children)
         {
             child.setAncestors(child.getAncestors().replace(oldAncestors, newAncestors));
         }
@@ -150,7 +149,7 @@ public class DeptServiceImpl implements DeptService {
      *
      * @param dept 当前部门
      */
-    private void updateParentDeptStatus(MyDept dept)
+    private void updateParentDeptStatus(SysDept dept)
     {
         dept = deptDao.selectDeptById(dept.getDeptId());;
         deptDao.updateDeptStatus(dept);

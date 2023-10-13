@@ -1,13 +1,11 @@
 package com.codermy.myspringsecurityplus.log.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.codermy.myspringsecurityplus.log.dto.ErrorLogDto;
 import com.codermy.myspringsecurityplus.log.dto.LogDto;
 import com.codermy.myspringsecurityplus.log.dto.LogQuery;
-import com.codermy.myspringsecurityplus.log.entity.MyLog;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import com.codermy.myspringsecurityplus.log.entity.SysLog;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -16,14 +14,7 @@ import java.util.List;
  * @createTime 2020/8/8
  */
 @Mapper
-public interface LogDao {
-
-    /**
-     * 保存日志
-     * @param log
-     */
-    @Insert("insert into my_log(user_name,ip,description,params,type,exception_detail,browser,method,time,create_time)values(#{userName},#{ip},#{description},#{params},#{type},#{exceptionDetail},#{browser},#{method},#{time},now())")
-    void save(MyLog log);
+public interface LogDao extends BaseMapper<SysLog> {
 
     /**
      * 分页返回所有用户日志
@@ -45,6 +36,6 @@ public interface LogDao {
      * 删除所有日志
      * @param type 日志类型
      */
-    @Delete("delete from my_log where type = #{type}")
+    @Update("UPDATE sys_log SET  enabled = 0 WHERE type = #{type}")
     void delAllByInfo(String type);
 }

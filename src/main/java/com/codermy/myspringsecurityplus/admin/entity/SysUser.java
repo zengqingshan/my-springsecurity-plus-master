@@ -1,6 +1,5 @@
 package com.codermy.myspringsecurityplus.admin.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,12 +11,12 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class MyUser extends BaseEntity{
+public class SysUser extends BaseEntity{
     private static final long serialVersionUID = -6525908145032868837L;
 
     private Integer userId;
 
-    private Integer type;
+    private Integer type = 1;
 
     private Integer deptId;
 
@@ -56,7 +55,7 @@ public class MyUser extends BaseEntity{
         return userId != null && 1L == userId;
     }
 
-    public MyUser(Integer userId)
+    public SysUser(Integer userId)
     {
         this.setUserId(userId);
     }

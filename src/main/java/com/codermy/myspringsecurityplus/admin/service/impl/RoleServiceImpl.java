@@ -6,8 +6,8 @@ import com.codermy.myspringsecurityplus.admin.dao.RoleDeptDao;
 import com.codermy.myspringsecurityplus.admin.dao.RoleMenuDao;
 import com.codermy.myspringsecurityplus.admin.dao.RoleUserDao;
 import com.codermy.myspringsecurityplus.admin.dto.RoleDto;
-import com.codermy.myspringsecurityplus.admin.entity.MyRole;
-import com.codermy.myspringsecurityplus.admin.entity.MyRoleUser;
+import com.codermy.myspringsecurityplus.admin.entity.SysRole;
+import com.codermy.myspringsecurityplus.admin.entity.SysRoleUser;
 import com.codermy.myspringsecurityplus.admin.service.RoleService;
 import com.codermy.myspringsecurityplus.common.utils.Result;
 import com.codermy.myspringsecurityplus.common.utils.ResultCode;
@@ -37,14 +37,14 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @DataPermission(deptAlias = "d")
-    public Result<MyRole> getFuzzyRolesByPage(Integer offectPosition, Integer limit,MyRole myRole) {
+    public Result<SysRole> getFuzzyRolesByPage(Integer offectPosition, Integer limit, SysRole sysRole) {
         Page page = PageHelper.offsetPage(offectPosition,limit);
-        List<MyRole> fuzzyRolesByPage = roleDao.getFuzzyRolesByPage(myRole);
+        List<SysRole> fuzzyRolesByPage = roleDao.getFuzzyRolesByPage(sysRole);
         return Result.ok().count(page.getTotal()).data(fuzzyRolesByPage).code(ResultCode.TABLE_SUCCESS);
     }
 
     @Override
-    public MyRole getRoleById(Integer id) {
+    public SysRole getRoleById(Integer id) {
         return roleDao.getRoleById(id);
     }
 
@@ -99,8 +99,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Result<MyRole> delete(Integer id) {
-        List<MyRoleUser> tbRoleUsers = roleUserDao.listAllRoleUserByRoleId(id);
+    public Result<SysRole> delete(Integer id) {
+        List<SysRoleUser> tbRoleUsers = roleUserDao.listAllRoleUserByRoleId(id);
         if(tbRoleUsers.size() <= 0){
             roleMenuDao.deleteRoleMenu(id);
             roleDao.delete(id);
@@ -111,7 +111,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Result<MyRole> getAllRoles() {
+    public Result<SysRole> getAllRoles() {
         return Result.ok().data(roleDao.getAllRoles());
     }
 }

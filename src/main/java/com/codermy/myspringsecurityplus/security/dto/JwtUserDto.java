@@ -1,14 +1,13 @@
 package com.codermy.myspringsecurityplus.security.dto;
 
-import com.codermy.myspringsecurityplus.admin.entity.MyRole;
-import com.codermy.myspringsecurityplus.admin.entity.MyUser;
+import com.codermy.myspringsecurityplus.admin.entity.SysRole;
+import com.codermy.myspringsecurityplus.admin.entity.SysUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,9 +22,9 @@ public class JwtUserDto implements UserDetails {
     /**
      * 用户数据
      */
-    private MyUser myUser;
+    private SysUser sysUser;
 
-    private List<MyRole> roleInfo;
+    private List<SysRole> roleInfo;
     /**
      * 用户权限的集合
      */
@@ -43,7 +42,7 @@ public class JwtUserDto implements UserDetails {
      */
     @Override
     public String getPassword() {
-        return myUser.getPassword();
+        return sysUser.getPassword();
     }
 
 
@@ -53,7 +52,7 @@ public class JwtUserDto implements UserDetails {
      */
     @Override
     public String getUsername() {
-        return myUser.getUserName();
+        return sysUser.getUserName();
     }
 
 
@@ -93,12 +92,12 @@ public class JwtUserDto implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return myUser.getStatus() == 1 ? true : false;
+        return sysUser.getStatus() == 1 ? true : false;
     }
 
 
-    public JwtUserDto(MyUser myUser, List<GrantedAuthority> authorities) {
-        this.myUser = myUser;
+    public JwtUserDto(SysUser sysUser, List<GrantedAuthority> authorities) {
+        this.sysUser = sysUser;
         this.authorities = authorities;
     }
 }

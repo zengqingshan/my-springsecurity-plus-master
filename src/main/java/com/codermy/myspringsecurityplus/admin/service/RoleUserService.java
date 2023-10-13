@@ -1,7 +1,6 @@
 package com.codermy.myspringsecurityplus.admin.service;
 
-import com.codermy.myspringsecurityplus.admin.entity.MyRoleUser;
-import com.codermy.myspringsecurityplus.common.utils.Result;
+import com.codermy.myspringsecurityplus.admin.entity.SysRoleUser;
 
 import java.util.List;
 
@@ -15,5 +14,5 @@ public interface RoleUserService {
      * @param userId
      * @return
      */
-    List<MyRoleUser> getMyRoleUserByUserId(Integer userId);
+    List<SysRoleUser> getMyRoleUserByUserId(Integer userId);
 }

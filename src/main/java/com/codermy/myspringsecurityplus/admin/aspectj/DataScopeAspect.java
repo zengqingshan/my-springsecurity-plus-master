@@ -1,11 +1,9 @@
 package com.codermy.myspringsecurityplus.admin.aspectj;
 
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.codermy.myspringsecurityplus.admin.annotation.DataPermission;
 import com.codermy.myspringsecurityplus.admin.entity.BaseEntity;
-import com.codermy.myspringsecurityplus.admin.entity.MyRole;
-import com.codermy.myspringsecurityplus.admin.entity.MyUser;
+import com.codermy.myspringsecurityplus.admin.entity.SysRole;
 import com.codermy.myspringsecurityplus.admin.service.RoleUserService;
 import com.codermy.myspringsecurityplus.common.utils.SecurityUtils;
 import com.codermy.myspringsecurityplus.security.dto.JwtUserDto;
@@ -88,7 +86,7 @@ public class DataScopeAspect {
         if (currentUser != null)
         {
             // 如果是超级管理员，则不过滤数据
-            if (!currentUser.getMyUser().isAdmin())
+            if (!currentUser.getSysUser().isAdmin())
             {
                 dataScopeFilter(joinPoint, currentUser, controllerDataScope.deptAlias(),
                         controllerDataScope.userAlias());
@@ -108,7 +106,7 @@ public class DataScopeAspect {
     {
         StringBuilder sqlString = new StringBuilder();
 
-        for (MyRole role : user.getRoleInfo())
+        for (SysRole role : user.getRoleInfo())
         {
             String dataScope = role.getDataScope();
             if (DATA_SCOPE_ALL.equals(dataScope))
@@ -124,19 +122,19 @@ public class DataScopeAspect {
             }
             else if (DATA_SCOPE_DEPT.equals(dataScope))
             {
-                sqlString.append(StrUtil.format(" OR {}.dept_id = {} ", deptAlias, user.getMyUser().getDeptId()));
+                sqlString.append(StrUtil.format(" OR {}.dept_id = {} ", deptAlias, user.getSysUser().getDeptId()));
             }
             else if (DATA_SCOPE_DEPT_AND_CHILD.equals(dataScope))
             {
                 sqlString.append(StrUtil.format(
                         " OR {}.dept_id IN ( SELECT dept_id FROM my_dept WHERE dept_id = {} or find_in_set( {} , ancestors ) )",
-                        deptAlias, user.getMyUser().getDeptId(), user.getMyUser().getDeptId()));
+                        deptAlias, user.getSysUser().getDeptId(), user.getSysUser().getDeptId()));
             }
             else if (DATA_SCOPE_SELF.equals(dataScope))
             {
                 if (StrUtil.isNotBlank(userAlias))
                 {
-                    sqlString.append(StrUtil.format(" OR {}.user_id = {} ", userAlias, user.getMyUser().getUserId()));
+                    sqlString.append(StrUtil.format(" OR {}.user_id = {} ", userAlias, user.getSysUser().getUserId()));
                 }
                 else
                 {

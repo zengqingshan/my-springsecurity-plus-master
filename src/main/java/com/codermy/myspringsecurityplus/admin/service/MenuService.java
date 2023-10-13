@@ -2,7 +2,7 @@ package com.codermy.myspringsecurityplus.admin.service;
 
 import com.codermy.myspringsecurityplus.admin.dto.MenuDto;
 import com.codermy.myspringsecurityplus.admin.dto.MenuIndexDto;
-import com.codermy.myspringsecurityplus.admin.entity.MyMenu;
+import com.codermy.myspringsecurityplus.admin.entity.SysMenu;
 import com.codermy.myspringsecurityplus.common.utils.Result;
 
 import java.util.List;
@@ -18,14 +18,14 @@ public interface MenuService {
      * @param queryType 类型
      * @return
      */
-    List<MyMenu> getMenuAll(String queryName,Integer queryType);
+    List<SysMenu> getMenuAll(String queryName, Integer queryType);
 
     /**
      * 获取菜单信息
      * @param id
      * @return
      */
-    MyMenu getMenuById(Integer id);
+    SysMenu getMenuById(Integer id);
 
     /**
      * 菜单树
@@ -38,14 +38,14 @@ public interface MenuService {
      * @param menu
      * @return
      */
-    Result updateMenu(MyMenu menu);
+    Result updateMenu(SysMenu menu);
 
     /**
      * 保存菜单
      * @param menu
      * @return
      */
-    Result<MyMenu> save(MyMenu menu);
+    Result<SysMenu> save(SysMenu menu);
 
     /**
      * 删除菜单

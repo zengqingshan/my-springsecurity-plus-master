@@ -1,6 +1,6 @@
 package com.codermy.myspringsecurityplus.log.aspect;
 
-import com.codermy.myspringsecurityplus.log.entity.MyLog;
+import com.codermy.myspringsecurityplus.log.entity.SysLog;
 import com.codermy.myspringsecurityplus.log.service.MyLogService;
 import com.codermy.myspringsecurityplus.log.utils.LogUtils;
 import com.codermy.myspringsecurityplus.log.utils.RequestHolder;
@@ -45,7 +45,7 @@ public class LogAspect {
         currentTime.set(System.currentTimeMillis());
         result = joinPoint.proceed();
         //定义日志类型
-        MyLog log = new MyLog("INFO",System.currentTimeMillis() - currentTime.get());
+        SysLog log = new SysLog("INFO",System.currentTimeMillis() - currentTime.get());
         currentTime.remove();
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
         logService.save(SecurityUtils.getCurrentUsername(), LogUtils.getBrowser(request), LogUtils.getIp(request),joinPoint, log);
@@ -60,7 +60,7 @@ public class LogAspect {
      */
     @AfterThrowing(pointcut = "logPoinCut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
-        MyLog log = new MyLog("ERROR",System.currentTimeMillis() - currentTime.get());
+        SysLog log = new SysLog("ERROR",System.currentTimeMillis() - currentTime.get());
         currentTime.remove();
         log.setExceptionDetail(LogUtils.getStackTrace(e));
         HttpServletRequest request = RequestHolder.getHttpServletRequest();

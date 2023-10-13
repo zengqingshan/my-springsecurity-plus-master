@@ -51,8 +51,8 @@ spring:
       enabled: true
       additional-paths: src/main/java
       exclude: WEB-INF/**
-#mybatis配置
-mybatis:
+#mybatis-plus配置
+mybatis-plus:
   type-aliases-package: com.codermy.myspringsecurityplus.entity
   mapper-locations: classpath:/mybatis-mappers/*
   configuration:

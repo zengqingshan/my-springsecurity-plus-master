@@ -7,7 +7,7 @@ import lombok.Data;
  * @createTime 2020/8/19
  */
 @Data
-public class MyDept extends BaseEntity {
+public class SysDept extends BaseEntity {
     private static final long serialVersionUID = 8925514045582235633L;
 
     private Integer deptId;

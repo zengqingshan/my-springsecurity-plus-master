@@ -2,10 +2,11 @@ package com.codermy.myspringsecurityplus.log.service.impl;
 
 import cn.hutool.json.JSONObject;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.codermy.myspringsecurityplus.log.dao.LogDao;
 import com.codermy.myspringsecurityplus.log.dto.ErrorLogDto;
 import com.codermy.myspringsecurityplus.log.dto.LogDto;
-import com.codermy.myspringsecurityplus.log.entity.MyLog;
+import com.codermy.myspringsecurityplus.log.entity.SysLog;
 import com.codermy.myspringsecurityplus.log.service.MyLogService;
 import com.codermy.myspringsecurityplus.log.dto.LogQuery;
 import com.codermy.myspringsecurityplus.common.utils.Result;
@@ -26,7 +27,7 @@ import java.util.List;
  * @createTime 2020/8/4
  */
 @Service
-public class MyLogServiceImpl implements MyLogService {
+public class MyLogServiceImpl extends ServiceImpl<LogDao, SysLog> implements MyLogService {
     @Autowired
     private LogDao logDao;
 
@@ -46,7 +47,7 @@ public class MyLogServiceImpl implements MyLogService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void save(String userName, String browser, String ip, ProceedingJoinPoint joinPoint, MyLog log) {
+    public void save(String userName, String browser, String ip, ProceedingJoinPoint joinPoint, SysLog log) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         com.codermy.myspringsecurityplus.log.aop.MyLog myLog = method.getAnnotation(com.codermy.myspringsecurityplus.log.aop.MyLog.class);
@@ -81,7 +82,8 @@ public class MyLogServiceImpl implements MyLogService {
         log.setUserName(userName);
         log.setParams(params.toString() + " }");
         log.setBrowser(browser);
-        logDao.save(log);
+//        logDao.save(log);
+        logDao.insert(log);
     }
 
     @Override

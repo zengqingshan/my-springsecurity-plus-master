@@ -1,7 +1,7 @@
 package com.codermy.myspringsecurityplus.admin.dao;
 
 import com.codermy.myspringsecurityplus.admin.dto.RoleDto;
-import com.codermy.myspringsecurityplus.admin.entity.MyRole;
+import com.codermy.myspringsecurityplus.admin.entity.SysRole;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -20,15 +20,15 @@ public interface RoleDao {
      * @param role
      * @return
      */
-    List<MyRole> getFuzzyRolesByPage(MyRole role);
+    List<SysRole> getFuzzyRolesByPage(SysRole role);
 
     /**
      * 通过id查询角色
      * @param roleId
      * @return
      */
-    @Select("select r.role_id,r.role_name,r.data_scope,r.description,r.create_time,r.update_time from my_role r where r.role_id = #{roleId}")
-    MyRole getRoleById(Integer roleId);
+    @Select("select r.role_id,r.role_name,r.data_scope,r.description,r.create_by,r.create_time,r.update_by,r.update_time,r.enabled from sys_role r where r.role_id = #{roleId} and r.enabled = 1")
+    SysRole getRoleById(Integer roleId);
 
     /**
      * 更新角色
@@ -49,13 +49,13 @@ public interface RoleDao {
      * @param roleId
      * @return
      */
-    @Delete("delete from my_role where role_id = #{roleId}")
+    @Update("UPDATE sys_role SET enabled = 0 WHERE role_id = #{roleId}")
     int delete(Integer roleId);
 
     /**
      * 返回所有角色
      * @return
      */
-    @Select("select r.role_id,r.role_name,r.description from my_role r")
-    List<MyRole> getAllRoles();
+    @Select("select r.role_id,r.role_name,r.description from sys_role r where r.enabled=1")
+    List<SysRole> getAllRoles();
 }

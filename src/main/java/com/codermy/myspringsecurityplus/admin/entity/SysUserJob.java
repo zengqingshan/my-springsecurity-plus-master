@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @createTime 2020/8/21
  */
 @Data
-public class MyUserJob implements Serializable {
+public class SysUserJob extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 8925514045582235321L;
 

@@ -15,7 +15,7 @@ public interface RoleMenuDao {
      * @param roleId
      * @return
      */
-    @Delete("delete from my_role_menu where role_id = #{roleId}")
+    @Update("UPDATE sys_role_menu SET enabled = 0 WHERE role_id = #{roleId}")
     int deleteRoleMenu(Integer roleId);
 
     /**
@@ -30,6 +30,6 @@ public interface RoleMenuDao {
      * @param id
      * @return
      */
-    @Select("select count(*) from my_role_menu t where t.menu_id = #{menuId}")
+    @Select("select count(*) from sys_role_menu t where t.menu_id = #{menuId} and t.enabled = 1")
     Integer countRoleMenuByRoleId(Integer id);
 }

@@ -5,13 +5,13 @@
 <mapper namespace="com.codermy.myspringsecurityplus.admin.dao.UserDao">
 
     <sql id="SysUserEntity">
-        u.user_id,u.type,u.dept_id,u.user_name,u.password,u.nick_name,u.phone,u.email,u.status,u.create_by,u.create_time,u.update_by,u.update_time,u.enabled
+        SELECT
+            u.user_id,u.type,u.dept_id,u.user_name,u.password,u.nick_name,u.phone,u.email,u.status,u.create_by,u.create_time,u.update_by,u.update_time,u.enabled
+        FROM sys_user u
     </sql>
 
-    <select id="getFuzzyUserByPage" resultType="com.codermy.myspringsecurityplus.admin.entity.MyUser">
-        SELECT
-            <include refid="SysUserEntity"></include>
-        FROM sys_user u
+    <select id="getFuzzyUserByPage" resultType="com.codermy.myspringsecurityplus.admin.entity.SysUser">
+        <include refid="SysUserEntity"></include>
         left join sys_dept d on u.dept_id = d.dept_id
         <where>
             <if test="nickName != null and nickName != ''">
@@ -23,18 +23,19 @@
             <if test="deptId != null and deptId != ''">
                 AND (u.dept_id = #{deptId} OR u.dept_id IN ( SELECT e.dept_id FROM sys_dept e WHERE FIND_IN_SET(#{deptId},ancestors) ))
             </if>
+            AND u.enabled = 1
             <!-- 数据范围过滤 -->
             ${params.dataScope}
         </where>
         ORDER BY u.user_id
     </select>
 
-    <select id="checkPhoneUnique" parameterType="String" resultType="com.codermy.myspringsecurityplus.admin.entity.MyUser">
-		select u.user_id,u.phone from sys_user u where u.phone = #{phone} limit 1
+    <select id="checkPhoneUnique" parameterType="String" resultType="com.codermy.myspringsecurityplus.admin.entity.SysUser">
+		select u.user_id,u.phone from sys_user u where u.phone = #{phone} and u.enabled = 1 limit 1
 	</select>
 
-    <select id="checkUsernameUnique" parameterType="String" resultType="com.codermy.myspringsecurityplus.admin.entity.MyUser">
-		select u.user_id,u.user_name from sys_user u where u.user_name = #{userName} limit 1
+    <select id="checkUsernameUnique" parameterType="String" resultType="com.codermy.myspringsecurityplus.admin.entity.SysUser">
+		select u.user_id,u.user_name from sys_user u where u.user_name = #{userName} and u.enabled = 1 limit 1
 	</select>
 
     <update id="updateUser">
@@ -61,8 +62,6 @@
             <if test="status != null">
                 status = #{status},
             </if>
-            update_by = #{updateBy}
-            update_time = #{updateTime}
         </set>
         where u.user_id = #{userId}
     </update>

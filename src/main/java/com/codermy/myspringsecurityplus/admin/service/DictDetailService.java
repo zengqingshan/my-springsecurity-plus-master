@@ -1,6 +1,6 @@
 package com.codermy.myspringsecurityplus.admin.service;
 
-import com.codermy.myspringsecurityplus.admin.entity.MyDictDetail;
+import com.codermy.myspringsecurityplus.admin.entity.SysDictDetail;
 import com.codermy.myspringsecurityplus.common.exceptionhandler.MyException;
 import com.codermy.myspringsecurityplus.common.utils.Result;
 
@@ -13,7 +13,7 @@ public interface DictDetailService {
      * @param dictName
      * @return
      */
-    Result<MyDictDetail> getDictByName(Integer offectPosition, Integer limit,String dictName);
+    Result<SysDictDetail> getDictByName(Integer offectPosition, Integer limit, String dictName);
 
 
     /**
@@ -21,29 +21,29 @@ public interface DictDetailService {
      * @param dictId
      * @return
      */
-    List<MyDictDetail> getDictDetail(Integer dictId);
+    List<SysDictDetail> getDictDetail(Integer dictId);
 
     /**
      * 新增字典详情
-     * @param myDictDetail
+     * @param sysDictDetail
      * @return
      */
-    int insertDictDetail(MyDictDetail myDictDetail);
+    int insertDictDetail(SysDictDetail sysDictDetail);
 
     /**
      * 通过id获得字典信息
      * @param id
      * @return
      */
-    MyDictDetail getDictDetailById(Integer id);
+    SysDictDetail getDictDetailById(Integer id);
 
     /**
      * 修改保存字典详情信息
      *
-     * @param myDictDetail 岗位信息
+     * @param sysDictDetail 岗位信息
      * @return 结果
      */
-    int updateDictDetail(MyDictDetail myDictDetail);
+    int updateDictDetail(SysDictDetail sysDictDetail);
 
     /**
      * 批量删除字典详情信息

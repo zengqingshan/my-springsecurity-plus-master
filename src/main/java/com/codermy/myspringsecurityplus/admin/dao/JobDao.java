@@ -1,6 +1,6 @@
 package com.codermy.myspringsecurityplus.admin.dao;
 
-import com.codermy.myspringsecurityplus.admin.entity.MyJob;
+import com.codermy.myspringsecurityplus.admin.entity.SysJob;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -19,15 +19,15 @@ public interface JobDao {
      * @param queryStatus 状态查询
      * @return
      */
-    List<MyJob> getFuzzyJob(String queryName, Integer queryStatus);
+    List<SysJob> getFuzzyJob(String queryName, Integer queryStatus);
 
     /**
      * 新增岗位信息
      * @param job 岗位信息
      * @return 结果
      */
-    @Insert("INSERT INTO my_job(job_name,status,sort, create_time, update_time) values(#{jobName},#{status},#{sort}, now(), now())")
-    int insertDept(MyJob job);
+    @Insert("INSERT INTO sys_job(job_name,status,sort,enabled) values(#{jobName},#{status},#{sort},#{enanled})")
+    int insertDept(SysJob job);
 
 
     /**
@@ -35,14 +35,14 @@ public interface JobDao {
      * @param name 岗位名称
      * @return 结果
      */
-    MyJob checkJobNameUnique(String name);
+    SysJob checkJobNameUnique(String name);
     /**
      * 通过id查询岗位信息
      * @param jobId
      * @return
      */
-    @Select("select j.job_id,j.job_name,j.status,j.sort,j.create_time,j.update_time from my_job j where j.job_id = #{jobId}")
-    MyJob getJobById(Integer jobId);
+    @Select("select j.job_id,j.job_name,j.status,j.sort,j.create_by,j.create_time,j.update_by,j.update_time,j.enabled from sys_job j where j.job_id = #{jobId} and j.enabled=1")
+    SysJob getJobById(Integer jobId);
 
     /**
      * 批量删除岗位信息
@@ -58,20 +58,20 @@ public interface JobDao {
      * @param userId 用户ID
      * @return 岗位列表
      */
-    List<MyJob> selectJobsByUserId(Integer userId);
+    List<SysJob> selectJobsByUserId(Integer userId);
 
     /**
      * 查询所有岗位
      *
      * @return 岗位列表
      */
-    List<MyJob> selectJobAll();
+    List<SysJob> selectJobAll();
 
     /**
      * 修改岗位信息
      *
-     * @param myJob 岗位信息
+     * @param sysJob 岗位信息
      * @return 结果
      */
-    int updateJob(MyJob myJob);
+    int updateJob(SysJob sysJob);
 }

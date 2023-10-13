@@ -1,8 +1,7 @@
 package com.codermy.myspringsecurityplus.admin.service;
 
 import com.codermy.myspringsecurityplus.admin.dto.DeptDto;
-import com.codermy.myspringsecurityplus.admin.entity.MyDept;
-import com.codermy.myspringsecurityplus.common.utils.Result;
+import com.codermy.myspringsecurityplus.admin.entity.SysDept;
 
 import java.util.List;
 
@@ -13,10 +12,10 @@ import java.util.List;
 public interface DeptService {
     /**
      * 返回部门
-     * @param myDept 名称
+     * @param sysDept 名称
      * @return
      */
-    List<MyDept> getDeptAll(MyDept myDept);
+    List<SysDept> getDeptAll(SysDept sysDept);
 
     /**
      * 部门树
@@ -36,10 +35,10 @@ public interface DeptService {
 
     /**
      * 新增部门信息
-     * @param myDept 岗位信息
+     * @param sysDept 岗位信息
      * @return 结果
      */
-    int insertDept(MyDept myDept);
+    int insertDept(SysDept sysDept);
 
     /**
      * 校验部门名称是否唯一
@@ -47,7 +46,7 @@ public interface DeptService {
      * @param dept 部门信息
      * @return 结果
      */
-    String checkDeptNameUnique(MyDept dept);
+    String checkDeptNameUnique(SysDept dept);
 
     /**
      * 根据部门ID查询信息
@@ -55,14 +54,14 @@ public interface DeptService {
      * @param deptId 部门ID
      * @return 部门信息
      */
-    public MyDept selectDeptById(Integer deptId);
+    public SysDept selectDeptById(Integer deptId);
 
     /**
      * 通过id查询部门信息
      * @param deptId
      * @return
      */
-    MyDept getDeptById(Integer deptId);
+    SysDept getDeptById(Integer deptId);
 
     /**
      * 修改保存部门信息
@@ -70,7 +69,7 @@ public interface DeptService {
      * @param dept 部门信息
      * @return 结果
      */
-    int updateDept(MyDept dept);
+    int updateDept(SysDept dept);
 
     /**
      * 根据ID查询所有子部门（正常状态）
@@ -104,8 +103,8 @@ public interface DeptService {
      int deleteDeptById(Integer deptId);
     /**
      * 修改部门状态
-     * @param myDept
+     * @param sysDept
      * @return
      */
-     int changeStatus(MyDept myDept);
+     int changeStatus(SysDept sysDept);
 }

@@ -1,9 +1,10 @@
 package com.codermy.myspringsecurityplus.log.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
  * @createTime 2020/8/4
  */
 @Data
-public class MyLog implements Serializable {
+public class SysLog implements Serializable {
 
     private Long logId;
 
@@ -45,10 +46,16 @@ public class MyLog implements Serializable {
     /** 请求耗时 */
     private Long time;
 
-    /** 创建日期 */
-    private Date createTime = new Date();
+    /** 创建人 */
+    @TableField(fill = FieldFill.INSERT)
+    private String createBy;
 
-    public MyLog( String type,Long time) {
+    /** 创建日期 */
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
+//    private Date createTime = new Date();
+
+    public SysLog(String type, Long time) {
         this.type = type;
         this.time = time;
     }

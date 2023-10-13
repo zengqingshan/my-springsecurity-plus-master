@@ -10,26 +10,26 @@
     <div class="mainBox">
         <div class="main-container">
             <div class="main-container">
-                <input type="text" id="deptId" th:value="${myDept.deptId}" name="deptId" style="display:none;" autocomplete="off" class="layui-input">
+                <input type="text" id="deptId" th:value="${sysDept.deptId}" name="deptId" style="display:none;" autocomplete="off" class="layui-input">
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                         <span style="color: red">*</span>部门名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="deptName" lay-verify="deptName" th:value="${myDept.deptName}" autocomplete="off" placeholder="请输入部门名" class="layui-input">
+                        <input type="text" name="deptName" lay-verify="deptName" th:value="${sysDept.deptName}" autocomplete="off" placeholder="请输入部门名" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                         <span style="color: red">*</span>排序</label>
                     <div class="layui-input-block">
-                        <input type="text"  name="sort" lay-verify="sort"th:value="${myDept.sort}"  autocomplete="off" placeholder="请输入排序" class="layui-input">
+                        <input type="text"  name="sort" lay-verify="sort"th:value="${sysDept.sort}"  autocomplete="off" placeholder="请输入排序" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">部门状态</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="status" th:checked="${myDept.status == 1}? 'true':'false'" value="1" title="正常" checked>
-                        <input type="radio" name="status" th:checked="${myDept.status == 0}? 'true':'false'" value="0" title="停用">
+                        <input type="radio" name="status" th:checked="${sysDept.status == 1}? 'true':'false'" value="1" title="正常" checked>
+                        <input type="radio" name="status" th:checked="${sysDept.status == 0}? 'true':'false'" value="0" title="停用">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -37,8 +37,8 @@
                         上级菜单
                     </label>
                     <div class="layui-input-block">
-                        <input type="number" id="parentId" th:value="${myDept.parentId}" name="parentId"  lay-verify="parentId" style="display:none;width: 0px" autocomplete="off" class="layui-input">
-                        <ul id="dataTree" class="dtree" data-id="0" th:data-value="${myDept.parentId}"></ul>
+                        <input type="number" id="parentId" th:value="${sysDept.parentId}" name="parentId"  lay-verify="parentId" style="display:none;width: 0px" autocomplete="off" class="layui-input">
+                        <ul id="dataTree" class="dtree" data-id="0" th:data-value="${sysDept.parentId}"></ul>
                     </div>
                 </div>
 

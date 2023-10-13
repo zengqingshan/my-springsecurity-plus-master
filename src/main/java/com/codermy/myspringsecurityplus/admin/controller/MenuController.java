@@ -1,7 +1,7 @@
 package com.codermy.myspringsecurityplus.admin.controller;
 
 import com.codermy.myspringsecurityplus.admin.dto.MenuDto;
-import com.codermy.myspringsecurityplus.admin.entity.MyMenu;
+import com.codermy.myspringsecurityplus.admin.entity.SysMenu;
 import com.codermy.myspringsecurityplus.log.aop.MyLog;
 import com.codermy.myspringsecurityplus.admin.service.MenuService;
 import com.codermy.myspringsecurityplus.common.utils.Result;
@@ -67,8 +67,8 @@ public class MenuController {
     @GetMapping(value = "/edit")
     @ApiOperation(value = "修改菜单页面")
     @PreAuthorize("hasAnyAuthority('menu:edit')")
-    public String editPermission(Model model, MyMenu myMenu) {
-        model.addAttribute("myMenu",menuService.getMenuById(myMenu.getMenuId()));
+    public String editPermission(Model model, SysMenu sysMenu) {
+        model.addAttribute("myMenu",menuService.getMenuById(sysMenu.getMenuId()));
         return "system/menu/menu-edit";
     }
 
@@ -77,7 +77,7 @@ public class MenuController {
     @ApiOperation(value = "修改菜单")
     @PreAuthorize("hasAnyAuthority('menu:edit')")
     @MyLog("修改菜单")
-    public Result updateMenu(@RequestBody MyMenu menu) {
+    public Result updateMenu(@RequestBody SysMenu menu) {
         return menuService.updateMenu(menu);
     }
 
@@ -86,7 +86,7 @@ public class MenuController {
     @ApiOperation(value = "添加菜单页面")
     @PreAuthorize("hasAnyAuthority('menu:add')")
     public String addMenu(Model model) {
-        model.addAttribute("myMenu",new MyMenu());
+        model.addAttribute("myMenu",new SysMenu());
         return "system/menu/menu-add";
     }
 
@@ -95,8 +95,8 @@ public class MenuController {
     @ApiOperation(value = "添加菜单")
     @PreAuthorize("hasAnyAuthority('menu:add')")
     @MyLog("添加菜单")
-    public Result<MyMenu> savePermission(@RequestBody MyMenu myMenu) {
-        return menuService.save(myMenu);
+    public Result<SysMenu> savePermission(@RequestBody SysMenu sysMenu) {
+        return menuService.save(sysMenu);
     }
 
 

@@ -4,7 +4,7 @@ import com.codermy.myspringsecurityplus.admin.dao.MenuDao;
 import com.codermy.myspringsecurityplus.admin.dao.RoleMenuDao;
 import com.codermy.myspringsecurityplus.admin.dto.MenuDto;
 import com.codermy.myspringsecurityplus.admin.dto.MenuIndexDto;
-import com.codermy.myspringsecurityplus.admin.entity.MyMenu;
+import com.codermy.myspringsecurityplus.admin.entity.SysMenu;
 import com.codermy.myspringsecurityplus.admin.service.MenuService;
 import com.codermy.myspringsecurityplus.common.utils.Result;
 import com.codermy.myspringsecurityplus.common.utils.TreeUtil;
@@ -26,13 +26,13 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private RoleMenuDao roleMenuDao;
     @Override
-    public List<MyMenu> getMenuAll(String queryName,Integer queryType) {
+    public List<SysMenu> getMenuAll(String queryName, Integer queryType) {
 
         return menuDao.getFuzzyMenu(queryName,queryType);
     }
 
     @Override
-    public MyMenu getMenuById(Integer id) {
+    public SysMenu getMenuById(Integer id) {
         return menuDao.getMenuById(id);
     }
 
@@ -42,14 +42,14 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Result updateMenu(MyMenu menu) {
+    public Result updateMenu(SysMenu menu) {
         menu.setIcon("layui-icon "+menu.getIcon());
         return (menuDao.update(menu) > 0) ? Result.ok().message("修改成功") : Result.error().message("修改失败");
 
     }
 
     @Override
-    public Result<MyMenu> save(MyMenu menu) {
+    public Result<SysMenu> save(SysMenu menu) {
         menu.setIcon("layui-icon "+menu.getIcon());
         return (menuDao.save(menu) > 0) ? Result.ok().message("添加成功") : Result.error().message("添加失败");
 

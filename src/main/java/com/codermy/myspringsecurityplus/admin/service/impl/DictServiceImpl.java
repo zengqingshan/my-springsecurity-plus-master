@@ -4,8 +4,7 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import com.codermy.myspringsecurityplus.admin.dao.DictDao;
 import com.codermy.myspringsecurityplus.admin.dao.DictDetailDao;
-import com.codermy.myspringsecurityplus.admin.entity.MyDict;
-import com.codermy.myspringsecurityplus.admin.entity.MyJob;
+import com.codermy.myspringsecurityplus.admin.entity.SysDict;
 import com.codermy.myspringsecurityplus.admin.service.DictService;
 import com.codermy.myspringsecurityplus.common.exceptionhandler.MyException;
 import com.codermy.myspringsecurityplus.common.utils.Result;
@@ -27,47 +26,47 @@ public class DictServiceImpl implements DictService {
     @Autowired
     private DictDetailDao dictDetailDao;
     @Override
-    public Result<MyDict> getDictPage(Integer offectPosition, Integer limit, MyDict myDict) {
+    public Result<SysDict> getDictPage(Integer offectPosition, Integer limit, SysDict sysDict) {
         Page page = PageHelper.offsetPage(offectPosition,limit);
-        List<MyDict> fuzzyDictByPage = dictDao.getFuzzyDictByPage(myDict);
+        List<SysDict> fuzzyDictByPage = dictDao.getFuzzyDictByPage(sysDict);
         return Result.ok().count(page.getTotal()).data(fuzzyDictByPage).code(ResultCode.TABLE_SUCCESS);
     }
 
     @Override
-    public MyDict getDictByName(String dictName) {
+    public SysDict getDictByName(String dictName) {
         return dictDao.getDictByName(dictName);
     }
 
     @Override
-    public String checkDictNameUnique(MyDict myDict) {
-        MyDict info = dictDao.getDictByName(myDict.getDictName());
-        if (ObjectUtil.isNotEmpty(info) && !info.getDictId().equals (myDict.getDictId())){
+    public String checkDictNameUnique(SysDict sysDict) {
+        SysDict info = dictDao.getDictByName(sysDict.getDictName());
+        if (ObjectUtil.isNotEmpty(info) && !info.getDictId().equals (sysDict.getDictId())){
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
     }
 
     @Override
-    public int insertDict(MyDict myDict) {
-        return dictDao.insertDict(myDict);
+    public int insertDict(SysDict sysDict) {
+        return dictDao.insertDict(sysDict);
     }
 
     @Override
-    public MyDict getDictById(Integer dictId) {
+    public SysDict getDictById(Integer dictId) {
         return dictDao.getDictById(dictId);
     }
 
     @Override
-    public int updateDict(MyDict myDict) {
-        return dictDao.updateDict(myDict);
+    public int updateDict(SysDict sysDict) {
+        return dictDao.updateDict(sysDict);
     }
 
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public int deleteDictByIds(String ids)  throws MyException {
         Integer[] dictIds = Convert.toIntArray(ids);
-        for (Integer dictId : dictIds){
-            dictDetailDao.deleteDictDetailByDictId(dictId);
+        for (Integer dictId : dictIds){;
+            dictDetailDao.deleteDictDetailByDictId(dictId);;
         }
         return dictDao.deleteDictByIds(dictIds);
     }

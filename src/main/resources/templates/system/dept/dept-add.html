@@ -15,14 +15,14 @@
                     <label class="layui-form-label">
                         <span style="color: red">*</span>部门名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="deptName" lay-verify="deptName" th:value="${myDept.deptName}" autocomplete="off" placeholder="请输入部门名" class="layui-input">
+                        <input type="text" name="deptName" lay-verify="deptName" th:value="${sysDept.deptName}" autocomplete="off" placeholder="请输入部门名" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                         <span style="color: red">*</span>排序</label>
                     <div class="layui-input-block">
-                        <input type="text"  name="sort"  th:value="${myDept.sort}" lay-verify="sort" autocomplete="off" placeholder="请输入排序" class="layui-input">
+                        <input type="text"  name="sort"  th:value="${sysDept.sort}" lay-verify="sort" autocomplete="off" placeholder="请输入排序" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -37,8 +37,8 @@
                         上级菜单
                     </label>
                     <div class="layui-input-block">
-                        <input type="number" id="parentId" th:value="${myDept.parentId}" name="parentId"  lay-verify="parentId" style="display:none;width: 0px" autocomplete="off" class="layui-input">
-                        <ul id="dataTree" class="dtree" data-id="0" th:data-value="${myDept.parentId}"></ul>
+                        <input type="number" id="parentId" th:value="${sysDept.parentId}" name="parentId"  lay-verify="parentId" style="display:none;width: 0px" autocomplete="off" class="layui-input">
+                        <ul id="dataTree" class="dtree" data-id="0" th:data-value="${sysDept.parentId}"></ul>
                     </div>
                 </div>
 

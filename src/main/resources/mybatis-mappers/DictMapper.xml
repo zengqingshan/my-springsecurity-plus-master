@@ -6,42 +6,44 @@
 
 
     <sql id="selectDictVo">
-        select di.dict_id,di.dict_name,di.description,di.sort,di.create_by,di.update_by,di.create_time,di.update_time
-        from my_dict di
+        select di.dict_id,di.dict_name,di.description,di.sort,di.create_by,di.create_time,di.update_by,di.update_time
+        from sys_dict di
     </sql>
 
-    <select id="getFuzzyDictByPage" resultType="com.codermy.myspringsecurityplus.admin.entity.MyDict">
+    <select id="getFuzzyDictByPage" resultType="com.codermy.myspringsecurityplus.admin.entity.SysDict">
         <include refid="selectDictVo"/>
         <where>
             <if test="dictName != null and dictName != ''">
                 AND di.dict_name like CONCAT('%', #{dictName}, '%')
             </if>
+            AND di.enabled = 1
         </where>
 
     </select>
 
-    <select id="getDictByName" parameterType="string" resultType="com.codermy.myspringsecurityplus.admin.entity.MyDict">
+    <select id="getDictByName" parameterType="string" resultType="com.codermy.myspringsecurityplus.admin.entity.SysDict">
         <include refid="selectDictVo"/>
-        where di.dict_name = #{dictName}
+        where di.dict_name = #{dictName} AND di.enabled = 1
     </select>
 
 
-    <update id="updateDict" parameterType="com.codermy.myspringsecurityplus.admin.entity.MyDict">
-        update my_dict
+    <update id="updateDict" parameterType="com.codermy.myspringsecurityplus.admin.entity.SysDict">
+        update sys_dict
         <set>
             <if test="dictName != null and dictName != ''">dict_name = #{dictName},</if>
             <if test="description != null">description = #{description},</if>
             <if test="sort != null and sort != ''">sort = #{sort},</if>
-            update_time = #{updateTime}
         </set>
         where dict_id = #{dictId}
     </update>
 
 
-    <delete id="deleteDictByIds" parameterType="integer">
-        delete from my_dict where dict_id in
-        <foreach collection="array" item="dictId" open="(" separator="," close=")">
+    <update id="deleteDictByIds" parameterType="map">
+        update sys_dict
+        set enabled = 0
+        where dict_id in
+        <foreach collection="dictIds" item="dictId" open="(" separator="," close=")">
             #{dictId}
         </foreach>
-    </delete>
+    </update>
 </mapper>

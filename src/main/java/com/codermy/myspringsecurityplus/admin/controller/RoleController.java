@@ -1,7 +1,7 @@
 package com.codermy.myspringsecurityplus.admin.controller;
 
 import com.codermy.myspringsecurityplus.admin.dto.RoleDto;
-import com.codermy.myspringsecurityplus.admin.entity.MyRole;
+import com.codermy.myspringsecurityplus.admin.entity.SysRole;
 import com.codermy.myspringsecurityplus.log.aop.MyLog;
 import com.codermy.myspringsecurityplus.admin.service.RoleService;
 import com.codermy.myspringsecurityplus.common.utils.PageTableRequest;
@@ -36,15 +36,15 @@ public class RoleController {
     @ApiOperation(value = "分页返回角色列表")
     @PreAuthorize("hasAnyAuthority('role:list')")
     @MyLog("查询角色")
-    public Result roleList(PageTableRequest request,MyRole myRole) {
+    public Result roleList(PageTableRequest request, SysRole sysRole) {
         request.countOffset();
-        return roleService.getFuzzyRolesByPage(request.getOffset(), request.getLimit(),myRole);
+        return roleService.getFuzzyRolesByPage(request.getOffset(), request.getLimit(), sysRole);
     }
 
     @GetMapping(value = "/edit")
     @ApiOperation(value = "修改角色页面")
     @PreAuthorize("hasAnyAuthority('role:edit')")
-    public String editRole(Model model, MyRole role) {
+    public String editRole(Model model, SysRole role) {
         model.addAttribute("MyRole",roleService.getRoleById(role.getRoleId()));
         return "system/role/role-edit";
     }
@@ -52,7 +52,7 @@ public class RoleController {
     @GetMapping(value = "/edit/dataScope")
     @ApiOperation(value = "修改角色页面")
     @PreAuthorize("hasAnyAuthority('role:edit')")
-    public String editRoleDataScope(Model model, MyRole role) {
+    public String editRoleDataScope(Model model, SysRole role) {
         model.addAttribute("MyRole",roleService.getRoleById(role.getRoleId()));
         return "system/role/role-dataScope";
     }
@@ -79,7 +79,7 @@ public class RoleController {
     @ApiOperation(value = "添加角色页面")
     @PreAuthorize("hasAnyAuthority('role:add')")
     public String addRole(Model model) {
-        model.addAttribute("MyRole",new MyRole());
+        model.addAttribute("MyRole",new SysRole());
         return "/system/role/role-add";
     }
 
@@ -97,7 +97,7 @@ public class RoleController {
     @ApiOperation(value = "删除角色")
     @PreAuthorize("hasAnyAuthority('role:del')")
     @MyLog("删除角色")
-    public Result<MyRole> deleteRole(RoleDto roleDto) {
+    public Result<SysRole> deleteRole(RoleDto roleDto) {
         return roleService.delete(roleDto.getRoleId());
     }
 
@@ -105,7 +105,7 @@ public class RoleController {
     @ResponseBody
     @ApiOperation(value = "角色列表")
     @PreAuthorize("hasAnyAuthority('user:list')")
-    public Result<MyRole> getAll(){
+    public Result<SysRole> getAll(){
         return roleService.getAllRoles();
     }
 }

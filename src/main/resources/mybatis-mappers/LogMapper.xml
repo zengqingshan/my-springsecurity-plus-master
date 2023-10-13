@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.codermy.myspringsecurityplus.log.dao.LogDao">
     <select id="getFuzzyLogByPage" resultType="com.codermy.myspringsecurityplus.log.dto.LogDto">
-        SELECT l.user_name,l.ip,l.params,l.description,l.browser,l.time,l.method,l.create_time
-        FROM my_log l
+        SELECT l.user_name,l.ip,l.params,l.description,l.browser,l.time,l.method,l.create_by,l.create_time
+        FROM sys_log l
         <where>
             <if test="logQuery.logType != null and logQuery.logType  != ''">
                 AND l.type = #{logQuery.logType}
@@ -18,8 +18,8 @@
     </select>
 
     <select id="getFuzzyErrorLogByPage" resultType="com.codermy.myspringsecurityplus.log.dto.ErrorLogDto">
-        SELECT l.user_name,l.ip,l.params,l.description,l.browser,l.exception_detail,l.method,l.create_time
-        FROM my_log l
+        SELECT l.user_name,l.ip,l.params,l.description,l.browser,l.exception_detail,l.method,l.create_by,l.create_time
+        FROM sys_log l
         <where>
             <if test="logQuery.logType != null and logQuery.logType  != ''">
                 AND l.type = #{logQuery.logType}

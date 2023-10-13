@@ -1,9 +1,8 @@
 package com.codermy.myspringsecurityplus.admin.controller;
 
 
-import com.codermy.myspringsecurityplus.admin.dto.JobQueryDto;
-import com.codermy.myspringsecurityplus.admin.entity.MyDict;
-import com.codermy.myspringsecurityplus.admin.entity.MyJob;
+import com.codermy.myspringsecurityplus.admin.entity.SysDict;
+import com.codermy.myspringsecurityplus.admin.entity.SysJob;
 import com.codermy.myspringsecurityplus.admin.service.DictService;
 import com.codermy.myspringsecurityplus.common.exceptionhandler.MyException;
 import com.codermy.myspringsecurityplus.common.utils.PageTableRequest;
@@ -38,9 +37,9 @@ public class DictController {
     @ApiOperation(value = "字典列表")
     @PreAuthorize("hasAnyAuthority('dict:list')")
     @MyLog("查询字典列表")
-    public Result getDictAll(PageTableRequest pageTableRequest, MyDict myDict){
+    public Result getDictAll(PageTableRequest pageTableRequest, SysDict sysDict){
         pageTableRequest.countOffset();
-        return dictService.getDictPage(pageTableRequest.getOffset(),pageTableRequest.getLimit(),myDict);
+        return dictService.getDictPage(pageTableRequest.getOffset(),pageTableRequest.getLimit(), sysDict);
     }
 
 
@@ -48,7 +47,7 @@ public class DictController {
     @ApiOperation(value = "添加字典页面")
     @PreAuthorize("hasAnyAuthority('dict:add')")
     public String addDict(Model model){
-        model.addAttribute("MyDict",new MyDict());
+        model.addAttribute("MyDict",new SysDict());
         return "/system/dict/dict-add";
     }
 
@@ -57,18 +56,18 @@ public class DictController {
     @ApiOperation(value = "添加字典")
     @PreAuthorize("hasAnyAuthority('dict:add')")
     @MyLog("添加字典")
-    public Result saveDict(@RequestBody MyDict myDict){
-        if (UserConstants.NOT_UNIQUE.equals(dictService.checkDictNameUnique(myDict))) {
-            return Result.error().message("新增字典'" + myDict.getDictName() + "'失败，字典名称已存在");
+    public Result saveDict(@RequestBody SysDict sysDict){
+        if (UserConstants.NOT_UNIQUE.equals(dictService.checkDictNameUnique(sysDict))) {
+            return Result.error().message("新增字典'" + sysDict.getDictName() + "'失败，字典名称已存在");
         }
-        return Result.judge(dictService.insertDict(myDict),"添加字典");
+        return Result.judge(dictService.insertDict(sysDict),"添加字典");
     }
 
     @GetMapping(value = "/edit")
     @ApiOperation(value = "修改字典页面")
     @PreAuthorize("hasAnyAuthority('dict:edit')")
-    public String editDict(Model model, MyDict myDict) {
-        model.addAttribute("MyDict",dictService.getDictById(myDict.getDictId()));
+    public String editDict(Model model, SysDict sysDict) {
+        model.addAttribute("MyDict",dictService.getDictById(sysDict.getDictId()));
         return "system/dict/dict-edit";
     }
 
@@ -77,18 +76,18 @@ public class DictController {
     @ApiOperation(value = "修改字典")
     @PreAuthorize("hasAnyAuthority('dict:edit')")
     @MyLog("修改字典")
-    public Result updateDict(@RequestBody MyDict myDict){
-        if (UserConstants.NOT_UNIQUE.equals(dictService.checkDictNameUnique(myDict))) {
-            return Result.error().message("修改字典'" + myDict.getDictName() + "'失败，字典名称已存在");
+    public Result updateDict(@RequestBody SysDict sysDict){
+        if (UserConstants.NOT_UNIQUE.equals(dictService.checkDictNameUnique(sysDict))) {
+            return Result.error().message("修改字典'" + sysDict.getDictName() + "'失败，字典名称已存在");
         }
-        return Result.judge(dictService.updateDict(myDict),"修改字典");
+        return Result.judge(dictService.updateDict(sysDict),"修改字典");
     }
 
     @DeleteMapping
     @ResponseBody
     @ApiOperation(value = "删除字典")
     @PreAuthorize("hasAnyAuthority('dict:del')")
-    public Result<MyJob> deleteDict(String ids) {
+    public Result<SysJob> deleteDict(String ids) {
         try {
             dictService.deleteDictByIds(ids);
             return Result.ok().message("删除成功");

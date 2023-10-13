@@ -13,7 +13,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 @NoArgsConstructor
-public class MyRole extends BaseEntity{
+public class SysRole extends BaseEntity{
     private static final long serialVersionUID = -6525908145032868837L;
 
     private Integer roleId;
@@ -40,7 +40,7 @@ public class MyRole extends BaseEntity{
         return roleId != null && 1L == roleId;
     }
 
-    public MyRole(Integer roleId)
+    public SysRole(Integer roleId)
     {
         this.setRoleId(roleId);
     }

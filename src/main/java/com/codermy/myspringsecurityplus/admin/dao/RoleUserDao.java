@@ -1,6 +1,6 @@
 package com.codermy.myspringsecurityplus.admin.dao;
 
-import com.codermy.myspringsecurityplus.admin.entity.MyRoleUser;
+import com.codermy.myspringsecurityplus.admin.entity.SysRoleUser;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -16,8 +16,8 @@ public interface RoleUserDao {
      * @param id
      * @return
      */
-    @Select("select * from my_role_user ru where ru.role_id = #{roleId}")
-    List<MyRoleUser> listAllRoleUserByRoleId(Integer id);
+    @Select("select * from sys_role_user ru where ru.role_id = #{roleId} and ru.enabled = 1")
+    List<SysRoleUser> listAllRoleUserByRoleId(Integer id);
 
 
 
@@ -26,37 +26,37 @@ public interface RoleUserDao {
      * @param userId
      * @return
      */
-    @Select("select * from my_role_user ru where ru.user_id = #{userId}")
-    List<MyRoleUser> getMyRoleUserByUserId(Integer userId);
+    @Select("select * from sys_role_user ru where ru.user_id = #{userId} and ru.enabled = 1")
+    List<SysRoleUser> getMyRoleUserByUserId(Integer userId);
 
     /**
      * 通过用户id返回角色
      * @param intValue
      * @return
      */
-    @Select("select * from my_role_user ru where ru.user_id = #{userId}")
-    MyRoleUser getRoleUserByUserId(int intValue);
+    @Select("select * from sys_role_user ru where ru.user_id = #{userId} and ru.enabled = 1")
+    SysRoleUser getRoleUserByUserId(int intValue);
 
     /**
      * 更新
-     * @param myRoleUser
+     * @param sysRoleUser
      * @return
      */
-    int updateMyRoleUser(MyRoleUser myRoleUser);
+    int updateMyRoleUser(SysRoleUser sysRoleUser);
 
     /**
      * 新建
-     * @param myRoleUser
+     * @param sysRoleUser
      * @return
      */
-    @Insert("insert into my_role_user(user_id, role_id) values(#{userId}, #{roleId})")
-    int save(MyRoleUser myRoleUser);
+    @Insert("insert into sys_role_user(user_id, role_id, enabled) values(#{userId}, #{roleId}, #{enabled})")
+    int save(SysRoleUser sysRoleUser);
 
     /**
      * 删除
      * @param id
      * @return
      */
-    @Delete("delete from my_role_user where user_id = #{userId}")
+    @Update("UPDATE sys_role_user SET enabled = 0 WHERE user_id = #{userId}")
     int deleteRoleUserByUserId(Integer id);
 }

@@ -1,9 +1,10 @@
 package com.codermy.myspringsecurityplus.log.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.codermy.myspringsecurityplus.log.dto.ErrorLogDto;
 import com.codermy.myspringsecurityplus.log.dto.LogDto;
 import com.codermy.myspringsecurityplus.log.dto.LogQuery;
-import com.codermy.myspringsecurityplus.log.entity.MyLog;
+import com.codermy.myspringsecurityplus.log.entity.SysLog;
 import com.codermy.myspringsecurityplus.common.utils.Result;
 import org.aspectj.lang.ProceedingJoinPoint;
 
@@ -12,7 +13,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
  * @author codermy
  * @createTime 2020/8/4
  */
-public interface MyLogService {
+public interface MyLogService extends IService<SysLog> {
 
     /**
      * 分页模糊查询用户日志
@@ -40,7 +41,7 @@ public interface MyLogService {
      * @param joinPoint 切入点
      * @param log 日志信息
      */
-    void save(String userName, String browser, String ip, ProceedingJoinPoint joinPoint, MyLog log);
+    void save(String userName, String browser, String ip, ProceedingJoinPoint joinPoint, SysLog log);
     /**
      * 删除所有错误日志
      */

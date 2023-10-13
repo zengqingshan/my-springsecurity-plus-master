@@ -1,7 +1,7 @@
 package com.codermy.myspringsecurityplus.admin.controller;
 
 import com.codermy.myspringsecurityplus.admin.dto.DeptDto;
-import com.codermy.myspringsecurityplus.admin.entity.MyDept;
+import com.codermy.myspringsecurityplus.admin.entity.SysDept;
 import com.codermy.myspringsecurityplus.admin.service.DeptService;
 import com.codermy.myspringsecurityplus.common.utils.Result;
 import com.codermy.myspringsecurityplus.common.utils.ResultCode;
@@ -40,8 +40,8 @@ public class DeptController {
     @ApiOperation(value = "部门列表")
     @PreAuthorize("hasAnyAuthority('dept:edit')")
     @MyLog("查询部门")
-    public Result getDeptAll(MyDept myDept){
-        return Result.ok().data(deptService.getDeptAll(myDept)).code(ResultCode.TABLE_SUCCESS);
+    public Result getDeptAll(SysDept sysDept){
+        return Result.ok().data(deptService.getDeptAll(sysDept)).code(ResultCode.TABLE_SUCCESS);
     }
 
 
@@ -59,7 +59,7 @@ public class DeptController {
     @ApiOperation(value = "添加部门页面")
     @PreAuthorize("hasAnyAuthority('dept:add')")
     public String addJob(Model model){
-        model.addAttribute("myDept",new MyDept());
+        model.addAttribute("myDept",new SysDept());
         return "/system/dept/dept-add";
     }
 
@@ -68,7 +68,7 @@ public class DeptController {
     @ApiOperation(value = "添加部门")
     @PreAuthorize("hasAnyAuthority('dept:add')")
     @MyLog("添加部门")
-    public Result<MyDept> savePermission(@RequestBody MyDept dept) {
+    public Result<SysDept> savePermission(@RequestBody SysDept dept) {
 
         if (UserConstants.DEPT_NAME_NOT_UNIQUE.equals( deptService.checkDeptNameUnique(dept))) {
             return Result.error().message("新增岗位'" + dept.getDeptName() + "'失败，岗位名称已存在");
@@ -80,7 +80,7 @@ public class DeptController {
     @GetMapping(value = "/edit")
     @ApiOperation(value = "修改部门页面")
     @PreAuthorize("hasAnyAuthority('dept:edit')")
-    public String editPermission(Model model, MyDept dept) {
+    public String editPermission(Model model, SysDept dept) {
         model.addAttribute("myDept",deptService.getDeptById(dept.getDeptId()));
         return "system/dept/dept-edit";
     }
@@ -90,7 +90,7 @@ public class DeptController {
     @ApiOperation(value = "修改部门")
     @PreAuthorize("hasAnyAuthority('dept:edit')")
     @MyLog("修改部门")
-    public Result updateMenu(@RequestBody MyDept dept) {
+    public Result updateMenu(@RequestBody SysDept dept) {
         if (UserConstants.DEPT_NAME_NOT_UNIQUE.equals( deptService.checkDeptNameUnique(dept))) {
             return Result.error().message("更新岗位'" + dept.getDeptName() + "'失败，岗位名称已存在");
         } else if (dept.getParentId().equals(dept.getDeptId()))
@@ -113,17 +113,17 @@ public class DeptController {
     @ResponseBody
     @ApiOperation(value = "修改部门状态")
     @PreAuthorize("hasAnyAuthority('dept:edit')")
-    public Result changeStatus(@RequestBody MyDept myDept)
+    public Result changeStatus(@RequestBody SysDept sysDept)
     {
 
-        return Result.judge(deptService.changeStatus(myDept),"修改");
+        return Result.judge(deptService.changeStatus(sysDept),"修改");
     }
     @DeleteMapping
     @ResponseBody
     @ApiOperation(value = "删除部门")
     @PreAuthorize("hasAnyAuthority('dept:del')")
     @MyLog("删除部门")
-    public Result<MyDept> deleteRole(Integer deptId) {
+    public Result<SysDept> deleteRole(Integer deptId) {
         if (deptService.selectDeptCount(deptId) > 0){
             return Result.error().message("存在下级部门,不允许删除");
         }

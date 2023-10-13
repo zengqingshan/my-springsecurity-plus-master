@@ -1,7 +1,7 @@
 package com.codermy.myspringsecurityplus.admin.service;
 
 import com.codermy.myspringsecurityplus.admin.dto.RoleDto;
-import com.codermy.myspringsecurityplus.admin.entity.MyRole;
+import com.codermy.myspringsecurityplus.admin.entity.SysRole;
 import com.codermy.myspringsecurityplus.common.utils.Result;
 
 /**
@@ -13,17 +13,17 @@ public interface RoleService {
      * 返回角色
      * @param startPosition
      * @param limit
-     * @param myRole
+     * @param sysRole
      * @return
      */
-    Result<MyRole> getFuzzyRolesByPage(Integer startPosition, Integer limit,MyRole myRole);
+    Result<SysRole> getFuzzyRolesByPage(Integer startPosition, Integer limit, SysRole sysRole);
 
     /**
      * 通过id获得角色信息
      * @param roleId
      * @return
      */
-    MyRole getRoleById(Integer roleId);
+    SysRole getRoleById(Integer roleId);
 
     /**
      * 更新角色
@@ -50,11 +50,11 @@ public interface RoleService {
      * @param roleId
      * @return
      */
-    Result<MyRole> delete(Integer roleId);
+    Result<SysRole> delete(Integer roleId);
 
     /**
      * 获取全部角色
      * @return
      */
-    Result<MyRole> getAllRoles();
+    Result<SysRole> getAllRoles();
 }

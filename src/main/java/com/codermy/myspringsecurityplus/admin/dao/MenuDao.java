@@ -2,7 +2,7 @@ package com.codermy.myspringsecurityplus.admin.dao;
 
 import com.codermy.myspringsecurityplus.admin.dto.MenuDto;
 import com.codermy.myspringsecurityplus.admin.dto.MenuIndexDto;
-import com.codermy.myspringsecurityplus.admin.entity.MyMenu;
+import com.codermy.myspringsecurityplus.admin.entity.SysMenu;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -21,21 +21,26 @@ public interface MenuDao {
      * @return
      */
     @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
-    List<MyMenu> getFuzzyMenu(String queryName,Integer queryType);
+    List<SysMenu> getFuzzyMenu(String queryName, Integer queryType);
 
     /**
      * 通过id查询菜单
      * @param menuId
      * @return
      */
-    @Select("select m.menu_id,m.parent_id,m.menu_name,m.icon,m.url,m.permission,m.sort,m.type,m.create_time,m.update_time from my_menu m where m.menu_id = #{menuId}")
-    MyMenu getMenuById(Integer menuId);
+    @Select("select m.menu_id,m.parent_id,m.menu_name,m.icon,m.url,m.permission,m.sort,m.type,m.create_by,m.create_time,m.update_by,m.update_time,m.enabled from sys_menu m where m.menu_id = #{menuId} and enabled = 1")
+    SysMenu getMenuById(Integer menuId);
 
     /**
      * 菜单树
      * @return
      */
-    @Select("select m.menu_id,m.parent_id,m.menu_name from my_menu m")
+//    @Results(id = "buildAll",
+//    value = {
+//            @Result(property = "title",column = "menu_name"),
+//            @Result(property = "id",column = "menu_id")
+//    })
+    @Select("select m.menu_id,m.parent_id,m.menu_name from sys_menu m where m.enabled=1")
     @Result(property = "title",column = "menu_name")
     @Result(property = "id",column = "menu_id")
     List<MenuDto> buildAll();
@@ -45,7 +50,7 @@ public interface MenuDao {
      * @param menu
      * @return
      */
-    int update(MyMenu menu);
+    int update(SysMenu menu);
 
     /**
      * 新建菜单
@@ -53,15 +58,15 @@ public interface MenuDao {
      * @return
      */
     @Options(useGeneratedKeys = true, keyProperty = "menuId")
-    @Insert("insert into my_menu(parent_id, menu_name, icon, url, permission, sort, type, create_time, update_time)values(#{parentId}, #{menuName}, #{icon}, #{url}, #{permission}, #{sort}, #{type}, now(), now())")
-    int save(MyMenu menu);
+    @Insert("insert into sys_menu(parent_id, menu_name, icon, url, permission, sort, type, enabled)values(#{parentId}, #{menuName}, #{icon}, #{url}, #{permission}, #{sort}, #{type}, #{enabled})")
+    int save(SysMenu menu);
 
     /**
      * 通过id删除菜单
      * @param menuId
      * @return
      */
-    @Delete("delete from my_menu where menu_id = #{menuId}")
+    @Update("UPDATE sys_menu SET eanbled = 0 WHERE menu_id = #{menuId}")
     int deleteById(Integer menuId);
 
     /**
@@ -69,7 +74,7 @@ public interface MenuDao {
      * @param parentId
      * @return
      */
-    @Delete("delete from my_menu where parent_id = #{parentId}")
+    @Update("UPDATE sys_menu SET eanbled = 0 WHERE parent_id = #{parentId}")
     int deleteByParentId(Integer parentId);
 
     /**
@@ -77,7 +82,7 @@ public interface MenuDao {
      * @param parentId
      * @return
      */
-    @Select("select m.menu_id from my_menu m where parent_id = #{parentId}")
+    @Select("select m.menu_id from sys_menu m where parent_id = #{parentId} and m.enabled = 1")
     List<Integer> selectByParentId(Integer parentId);
 
     /**
@@ -85,7 +90,12 @@ public interface MenuDao {
      * @param roleId
      * @return
      */
-    @Select("select m.menu_id,m.parent_id,m.menu_name from my_menu m inner join my_role_menu rm on m.menu_id = rm.menu_id where rm.role_id = #{roleId}")
+//    @Results(id = "listByRoleId",
+//            value = {
+//                    @Result(property = "title",column = "menu_name"),
+//                    @Result(property = "id",column = "menu_id")
+//            })
+    @Select("select m.menu_id,m.parent_id,m.menu_name from sys_menu m inner join sys_role_menu rm on m.menu_id = rm.menu_id where rm.role_id = #{roleId} and m.enabled = 1")
     @Result(property = "title",column = "menu_name")
     @Result(property = "id",column = "menu_id")
     List<MenuDto> listByRoleId(Integer roleId);

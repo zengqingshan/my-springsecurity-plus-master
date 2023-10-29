@@ -1,5 +1,7 @@
 package com.codermy.myspringsecurityplus.admin.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.codermy.myspringsecurityplus.admin.entity.SysRoleDept;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,7 +14,7 @@ import java.util.List;
  * @createTime 2020/8/23
  */
 @Mapper
-public interface RoleDeptDao {
+public interface RoleDeptDao extends BaseMapper<SysRoleDept> {
 
     /**
      * 通过id删除与部门关联

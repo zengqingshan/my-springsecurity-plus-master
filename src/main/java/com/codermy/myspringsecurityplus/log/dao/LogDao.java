@@ -36,6 +36,6 @@ public interface LogDao extends BaseMapper<SysLog> {
      * 删除所有日志
      * @param type 日志类型
      */
-    @Update("UPDATE sys_log SET  enabled = 0 WHERE type = #{type}")
+    @Delete("DELETE FROM sys_log WHERE type = #{type}")
     void delAllByInfo(String type);
 }

@@ -1,5 +1,6 @@
 package com.codermy.myspringsecurityplus.admin.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.codermy.myspringsecurityplus.admin.entity.SysDictDetail;
 import org.apache.ibatis.annotations.*;
 
@@ -14,16 +15,16 @@ import java.util.List;
  * @since 2020-09-03
  */
 @Mapper
-public interface DictDetailDao {
+public interface DictDetailDao extends BaseMapper<SysDictDetail> {
 
     List<SysDictDetail> getDictDetail(Integer dictId);
-    /**
-     * 插入字典详情
-     * @param sysDictDetail
-     * @return
-     */
-    @Insert("INSERT INTO sys_dict_detail(dict_id,label,value, sort, enabled)values(#{dictId},#{label},#{value},#{sort},#{enabled})")
-    int insertDictDetail(SysDictDetail sysDictDetail);
+//    /**
+//     * 插入字典详情
+//     * @param sysDictDetail
+//     * @return
+//     */
+//    @Insert("INSERT INTO sys_dict_detail(dict_id,label,value, sort, enabled)values(#{dictId},#{label},#{value},#{sort},#{enabled})")
+//    int insertDictDetail(SysDictDetail sysDictDetail);
 
     /**
      * 通过id获得字典详情信息

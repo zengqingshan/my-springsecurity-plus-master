@@ -1,5 +1,6 @@
 package com.codermy.myspringsecurityplus.admin.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.codermy.myspringsecurityplus.admin.dto.DeptDto;
 import com.codermy.myspringsecurityplus.admin.entity.SysDept;
 import org.apache.ibatis.annotations.*;
@@ -13,7 +14,7 @@ import java.util.List;
  * @updateTime 2013/10/12
  */
 @Mapper
-public interface DeptDao {
+public interface DeptDao extends BaseMapper<SysDept> {
     /**
      * 模糊查询部门
      * @param sysDept 查询的名称
@@ -38,13 +39,14 @@ public interface DeptDao {
     SysDept checkDeptNameUnique(@Param("deptName")String deptName, @Param("parentId") Integer parentId);
 
 
-    /**
-     * 新增部门信息
-     * @param dept 岗位信息
-     * @return 结果
-     */
-    @Insert("INSERT INTO sys_dept(parent_id,ancestors,dept_name,sort,status,enabled) values(#{parentId},#{ancestors},#{deptName},#{sort},#{status},#{createBy},#{enabled})")
-    int insertDept(SysDept dept);
+//    /**
+//     * 新增部门信息
+//     * @param dept 岗位信息
+//     * @return 结果
+//     */
+//    @Insert("INSERT INTO sys_dept(parent_id,ancestors,dept_name,sort,status,enabled) values(#{parentId},#{ancestors},#{deptName},#{sort},#{status},#{createBy},#{enabled})")
+//    int insertDept(SysDept dept);
+
     /**
      * 根据部门ID查询信息
      * @param deptId 部门ID

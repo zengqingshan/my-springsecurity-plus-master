@@ -1,5 +1,8 @@
 package com.codermy.myspringsecurityplus.admin.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -7,9 +10,11 @@ import lombok.Data;
  * @createTime 2020/8/19
  */
 @Data
+@TableName("sys_job")
 public class SysJob extends BaseEntity {
     private static final long serialVersionUID = 8925514045582234222L;
 
+    @TableId(type = IdType.AUTO)
     private Integer jobId;
 
     private String jobName;

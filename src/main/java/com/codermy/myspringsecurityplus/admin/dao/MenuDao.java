@@ -1,5 +1,6 @@
 package com.codermy.myspringsecurityplus.admin.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.codermy.myspringsecurityplus.admin.dto.MenuDto;
 import com.codermy.myspringsecurityplus.admin.dto.MenuIndexDto;
 import com.codermy.myspringsecurityplus.admin.entity.SysMenu;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @SuppressWarnings("ALL")
 @Mapper
-public interface MenuDao {
+public interface MenuDao extends BaseMapper<SysMenu> {
     /**
      * 模糊查询菜单
      * @param queryName 查询的表题
@@ -35,11 +36,6 @@ public interface MenuDao {
      * 菜单树
      * @return
      */
-//    @Results(id = "buildAll",
-//    value = {
-//            @Result(property = "title",column = "menu_name"),
-//            @Result(property = "id",column = "menu_id")
-//    })
     @Select("select m.menu_id,m.parent_id,m.menu_name from sys_menu m where m.enabled=1")
     @Result(property = "title",column = "menu_name")
     @Result(property = "id",column = "menu_id")
@@ -52,14 +48,14 @@ public interface MenuDao {
      */
     int update(SysMenu menu);
 
-    /**
-     * 新建菜单
-     * @param menu
-     * @return
-     */
-    @Options(useGeneratedKeys = true, keyProperty = "menuId")
-    @Insert("insert into sys_menu(parent_id, menu_name, icon, url, permission, sort, type, enabled)values(#{parentId}, #{menuName}, #{icon}, #{url}, #{permission}, #{sort}, #{type}, #{enabled})")
-    int save(SysMenu menu);
+//    /**
+//     * 新建菜单
+//     * @param menu
+//     * @return
+//     */
+//    @Options(useGeneratedKeys = true, keyProperty = "menuId")
+//    @Insert("insert into sys_menu(parent_id, menu_name, icon, url, permission, sort, type, enabled)values(#{parentId}, #{menuName}, #{icon}, #{url}, #{permission}, #{sort}, #{type}, #{enabled})")
+//    int save(SysMenu menu);
 
     /**
      * 通过id删除菜单
@@ -90,11 +86,6 @@ public interface MenuDao {
      * @param roleId
      * @return
      */
-//    @Results(id = "listByRoleId",
-//            value = {
-//                    @Result(property = "title",column = "menu_name"),
-//                    @Result(property = "id",column = "menu_id")
-//            })
     @Select("select m.menu_id,m.parent_id,m.menu_name from sys_menu m inner join sys_role_menu rm on m.menu_id = rm.menu_id where rm.role_id = #{roleId} and m.enabled = 1")
     @Result(property = "title",column = "menu_name")
     @Result(property = "id",column = "menu_id")

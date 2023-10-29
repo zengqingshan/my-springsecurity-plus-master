@@ -1,6 +1,7 @@
 package com.codermy.myspringsecurityplus.admin.dao;
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.codermy.myspringsecurityplus.admin.entity.SysDict;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,7 +18,7 @@ import java.util.List;
  * @since 2020-09-03
  */
 @Mapper
-public interface DictDao {
+public interface DictDao extends BaseMapper<SysDict> {
 
     /**
      * 模糊查询字典
@@ -32,14 +33,6 @@ public interface DictDao {
      * @return
      */
     SysDict getDictByName(String dictName);
-
-    /**
-     * 插入字典
-     * @param sysDict
-     * @return
-     */
-    @Insert("INSERT INTO sys_dict(dict_id,dict_name,description, sort,enabled)values(#{dictId},#{dictName},#{description},#{sort},#{enabled})")
-    int insertDict(SysDict sysDict);
 
     /**
      * 通过id获得字典信息

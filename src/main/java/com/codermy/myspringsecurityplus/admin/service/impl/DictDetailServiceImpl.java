@@ -8,11 +8,13 @@ import com.codermy.myspringsecurityplus.admin.service.DictDetailService;
 import com.codermy.myspringsecurityplus.admin.service.DictService;
 import com.codermy.myspringsecurityplus.common.utils.Result;
 import com.codermy.myspringsecurityplus.common.utils.ResultCode;
+import com.codermy.myspringsecurityplus.common.utils.SecurityUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -39,7 +41,7 @@ public class DictDetailServiceImpl implements DictDetailService {
 
     @Override
     public int insertDictDetail(SysDictDetail sysDictDetail) {
-        return dictDetailDao.insertDictDetail(sysDictDetail);
+        return dictDetailDao.insert(sysDictDetail);
     }
 
     @Override
@@ -49,6 +51,8 @@ public class DictDetailServiceImpl implements DictDetailService {
 
     @Override
     public int updateDictDetail(SysDictDetail sysDictDetail) {
+        sysDictDetail.setUpdateBy(SecurityUtils.getCurrentUsername());
+        sysDictDetail.setUpdateTime(new Date());
         return dictDetailDao.updateDictDetail(sysDictDetail);
     }
 

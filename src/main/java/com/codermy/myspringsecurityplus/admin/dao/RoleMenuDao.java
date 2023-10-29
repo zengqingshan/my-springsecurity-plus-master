@@ -1,5 +1,7 @@
 package com.codermy.myspringsecurityplus.admin.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.codermy.myspringsecurityplus.admin.entity.SysRoleMenu;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.List;
  * @createTime 2020/7/10
  */
 @Mapper
-public interface RoleMenuDao {
+public interface RoleMenuDao extends BaseMapper<SysRoleMenu> {
     /**
      * 通过id删除rolemenu
      * @param roleId
@@ -18,12 +20,12 @@ public interface RoleMenuDao {
     @Update("UPDATE sys_role_menu SET enabled = 0 WHERE role_id = #{roleId}")
     int deleteRoleMenu(Integer roleId);
 
-    /**
-     * 新建角色与menu的联系
-     * @param roleId
-     * @param menuIds
-     */
-    void save(@Param("roleId")Integer roleId,@Param("menuIds") List<Integer> menuIds);
+//    /**
+//     * 新建角色与menu的联系
+//     * @param roleId
+//     * @param menuIds
+//     */
+//    void save(@Param("roleId")Integer roleId,@Param("menuIds") List<Integer> menuIds);
 
     /**
      * 通过role_id计算权限数量

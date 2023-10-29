@@ -9,6 +9,7 @@ import com.codermy.myspringsecurityplus.admin.service.DictService;
 import com.codermy.myspringsecurityplus.common.exceptionhandler.MyException;
 import com.codermy.myspringsecurityplus.common.utils.Result;
 import com.codermy.myspringsecurityplus.common.utils.ResultCode;
+import com.codermy.myspringsecurityplus.common.utils.SecurityUtils;
 import com.codermy.myspringsecurityplus.common.utils.UserConstants;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -48,7 +50,7 @@ public class DictServiceImpl implements DictService {
 
     @Override
     public int insertDict(SysDict sysDict) {
-        return dictDao.insertDict(sysDict);
+        return dictDao.insert(sysDict);
     }
 
     @Override
@@ -58,6 +60,8 @@ public class DictServiceImpl implements DictService {
 
     @Override
     public int updateDict(SysDict sysDict) {
+        sysDict.setUpdateBy(SecurityUtils.getCurrentUsername());
+        sysDict.setUpdateTime(new Date());
         return dictDao.updateDict(sysDict);
     }
 

@@ -8,11 +8,13 @@ import com.codermy.myspringsecurityplus.admin.entity.SysDept;
 import com.codermy.myspringsecurityplus.admin.service.DeptService;
 import com.codermy.myspringsecurityplus.common.exceptionhandler.MyException;
 import com.codermy.myspringsecurityplus.common.utils.ResultCode;
+import com.codermy.myspringsecurityplus.common.utils.SecurityUtils;
 import com.codermy.myspringsecurityplus.common.utils.TreeUtil;
 import com.codermy.myspringsecurityplus.common.utils.UserConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,7 +56,7 @@ public class DeptServiceImpl implements DeptService {
             throw new MyException(ResultCode.ERROR,"部门停用，不允许新增");
         }
         dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
-        return deptDao.insertDept(dept);
+        return deptDao.insert(dept);
     }
 
     @Override
@@ -121,6 +123,8 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public int changeStatus(SysDept sysDept) {
+        sysDept.setUpdateBy(SecurityUtils.getCurrentUsername());
+        sysDept.setUpdateTime(new Date());
         return deptDao.updateDept(sysDept);
     }
 
@@ -137,6 +141,8 @@ public class DeptServiceImpl implements DeptService {
         for (SysDept child : children)
         {
             child.setAncestors(child.getAncestors().replace(oldAncestors, newAncestors));
+            child.setUpdateBy(SecurityUtils.getCurrentUsername());
+            child.setUpdateTime(new Date());
         }
         if (children.size() > 0)
         {
@@ -151,7 +157,9 @@ public class DeptServiceImpl implements DeptService {
      */
     private void updateParentDeptStatus(SysDept dept)
     {
-        dept = deptDao.selectDeptById(dept.getDeptId());;
+        dept = deptDao.selectDeptById(dept.getDeptId());
+        dept.setUpdateBy(SecurityUtils.getCurrentUsername());
+        dept.setUpdateTime(new Date());
         deptDao.updateDeptStatus(dept);
     }
 }

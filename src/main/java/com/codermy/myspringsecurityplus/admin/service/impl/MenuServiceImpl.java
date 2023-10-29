@@ -51,7 +51,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public Result<SysMenu> save(SysMenu menu) {
         menu.setIcon("layui-icon "+menu.getIcon());
-        return (menuDao.save(menu) > 0) ? Result.ok().message("添加成功") : Result.error().message("添加失败");
+        return (menuDao.insert(menu) > 0) ? Result.ok().message("添加成功") : Result.error().message("添加失败");
 
     }
 

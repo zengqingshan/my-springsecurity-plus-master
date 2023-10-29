@@ -23,11 +23,11 @@
         </where>
     </select>
 
-    <insert id="saveRole" parameterType="com.codermy.myspringsecurityplus.admin.entity.SysRole" flushCache="true" useGeneratedKeys="true" keyProperty="roleId">
-		insert into sys_role(role_name, description, enabled)
-		values
-		(#{roleName}, #{description})
-	</insert>
+<!--    <insert id="insert" parameterType="com.codermy.myspringsecurityplus.admin.entity.SysRole" flushCache="true" useGeneratedKeys="true" keyProperty="roleId">-->
+<!--		insert into sys_role(role_name, description, enabled)-->
+<!--		values-->
+<!--		(#{roleName}, #{description}, #{enabled})-->
+<!--	</insert>-->
 
     <update id="update">
         update sys_role r

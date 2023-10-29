@@ -1,5 +1,6 @@
 package com.codermy.myspringsecurityplus.admin.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.codermy.myspringsecurityplus.admin.entity.SysRoleUser;
 import org.apache.ibatis.annotations.*;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * @createTime 2020/7/10
  */
 @Mapper
-public interface RoleUserDao {
+public interface RoleUserDao extends BaseMapper<SysRoleUser> {
     /**
      * 通过角色id返回所有用户
      * @param id

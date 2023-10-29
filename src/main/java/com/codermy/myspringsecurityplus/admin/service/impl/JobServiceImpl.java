@@ -38,7 +38,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public int insertJob(SysJob job) {
-        return jobDao.insertDept(job);
+        return jobDao.insert(job);
     }
 
     /**

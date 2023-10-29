@@ -1,5 +1,6 @@
 package com.codermy.myspringsecurityplus.admin.dto;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.codermy.myspringsecurityplus.admin.entity.SysRole;
 
 import java.util.List;
@@ -11,8 +12,10 @@ import java.util.List;
 public class RoleDto extends SysRole {
     private static final long serialVersionUID = -5784234789156935003L;
 
+    @TableField(exist = false)
     private List<Integer> menuIds;
 
+    @TableField(exist = false)
     private  List<Integer> deptIds;
 
     public List<Integer> getDeptIds() {

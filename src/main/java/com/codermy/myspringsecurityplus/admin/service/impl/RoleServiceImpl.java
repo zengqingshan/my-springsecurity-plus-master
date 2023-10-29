@@ -7,10 +7,12 @@ import com.codermy.myspringsecurityplus.admin.dao.RoleMenuDao;
 import com.codermy.myspringsecurityplus.admin.dao.RoleUserDao;
 import com.codermy.myspringsecurityplus.admin.dto.RoleDto;
 import com.codermy.myspringsecurityplus.admin.entity.SysRole;
+import com.codermy.myspringsecurityplus.admin.entity.SysRoleMenu;
 import com.codermy.myspringsecurityplus.admin.entity.SysRoleUser;
 import com.codermy.myspringsecurityplus.admin.service.RoleService;
 import com.codermy.myspringsecurityplus.common.utils.Result;
 import com.codermy.myspringsecurityplus.common.utils.ResultCode;
+import com.codermy.myspringsecurityplus.common.utils.SecurityUtils;
 import com.codermy.myspringsecurityplus.common.utils.UserConstants;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,7 +59,12 @@ public class RoleServiceImpl implements RoleService {
         roleMenuDao.deleteRoleMenu(roleDto.getRoleId());
         //2、判断该角色是否有赋予权限值，有就添加"
         if (!CollectionUtils.isEmpty(menuIds)) {
-            roleMenuDao.save(roleDto.getRoleId(), menuIds);
+            for (Integer menuId:menuIds) {
+                SysRoleMenu sysRoleMenu = new SysRoleMenu();
+                sysRoleMenu.setRoleId(roleDto.getRoleId());
+                sysRoleMenu.setMenuId(menuId);
+                roleMenuDao.insert(sysRoleMenu);
+            }
         }
         //3、更新角色表
         int countData = roleDao.update(roleDto);
@@ -88,12 +96,17 @@ public class RoleServiceImpl implements RoleService {
     public Result save(RoleDto roleDto) {
         roleDto.setDataScope("1");
         //1、先保存角色"
-        roleDao.saveRole(roleDto);
+        roleDao.insert(roleDto);
         List<Integer> menuIds = roleDto.getMenuIds();
         //移除0,permission id是从1开始
         //2、保存角色对应的所有权限
         if (!CollectionUtils.isEmpty(menuIds)) {
-            roleMenuDao.save(roleDto.getRoleId(), menuIds);
+            for (Integer menuId:menuIds) {
+                SysRoleMenu sysRoleMenu = new SysRoleMenu();
+                sysRoleMenu.setRoleId(roleDto.getRoleId());
+                sysRoleMenu.setMenuId(menuId);
+                roleMenuDao.insert(sysRoleMenu);
+            }
         }
         return Result.ok().message("插入成功");
     }

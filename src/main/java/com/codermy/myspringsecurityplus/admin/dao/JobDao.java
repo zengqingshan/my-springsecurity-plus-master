@@ -1,5 +1,6 @@
 package com.codermy.myspringsecurityplus.admin.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.codermy.myspringsecurityplus.admin.entity.SysJob;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,7 +13,7 @@ import java.util.List;
  * @createTime 2020/8/19
  */
 @Mapper
-public interface JobDao {
+public interface JobDao extends BaseMapper<SysJob> {
     /**
      * 模糊查询岗位
      * @param queryName 查询的名称
@@ -20,15 +21,6 @@ public interface JobDao {
      * @return
      */
     List<SysJob> getFuzzyJob(String queryName, Integer queryStatus);
-
-    /**
-     * 新增岗位信息
-     * @param job 岗位信息
-     * @return 结果
-     */
-    @Insert("INSERT INTO sys_job(job_name,status,sort,enabled) values(#{jobName},#{status},#{sort},#{enanled})")
-    int insertDept(SysJob job);
-
 
     /**
      * 校验岗位名称

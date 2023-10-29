@@ -1,5 +1,8 @@
 package com.codermy.myspringsecurityplus.admin.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,9 +16,11 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 @NoArgsConstructor
+@TableName("sys_role")
 public class SysRole extends BaseEntity{
     private static final long serialVersionUID = -6525908145032868837L;
 
+    @TableId(type = IdType.AUTO)
     private Integer roleId;
 
     private String roleName;

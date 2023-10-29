@@ -1,5 +1,6 @@
 package com.codermy.myspringsecurityplus.admin.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.codermy.myspringsecurityplus.admin.dto.RoleDto;
 import com.codermy.myspringsecurityplus.admin.entity.SysRole;
 import org.apache.ibatis.annotations.*;
@@ -11,7 +12,7 @@ import java.util.List;
  * @createTime 2020/7/10
  */
 @Mapper
-public interface RoleDao {
+public interface RoleDao extends BaseMapper<SysRole> {
 
 
 
@@ -37,12 +38,12 @@ public interface RoleDao {
      */
     int update(RoleDto roleDto);
 
-    /**
-     * 新建角色
-     * @param roleDto
-     * @return
-     */
-    int saveRole(RoleDto roleDto);
+//    /**
+//     * 新建角色
+//     * @param roleDto
+//     * @return
+//     */
+//    int insert(RoleDto roleDto);
 
     /**
      * 通过id删除角色

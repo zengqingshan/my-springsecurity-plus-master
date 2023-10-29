@@ -1,5 +1,8 @@
 package com.codermy.myspringsecurityplus.admin.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,10 +21,12 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="SysDict对象", description="数据字典")
+@TableName("sys_dict")
 public class SysDict extends BaseEntity{
     private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "id")
+    @TableId(type = IdType.AUTO)
     private Integer dictId;
 
     @ApiModelProperty(value = "字典名称")

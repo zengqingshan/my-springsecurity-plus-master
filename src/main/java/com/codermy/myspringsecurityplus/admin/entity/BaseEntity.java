@@ -7,7 +7,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,12 +27,12 @@ public abstract class BaseEntity implements Serializable {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(fill = FieldFill.INSERT_UPDATE, select = false)
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     @TableField(fill = FieldFill.INSERT)
     private String createBy;
@@ -43,7 +43,9 @@ public abstract class BaseEntity implements Serializable {
     private Integer enabled = 1;
 
     /** 请求参数 */
+    @TableField(exist = false)
     private Map<String, Object> params;
+
 
     public Map<String, Object> getParams()
     {

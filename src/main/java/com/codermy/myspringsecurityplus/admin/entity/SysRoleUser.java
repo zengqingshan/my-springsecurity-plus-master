@@ -17,7 +17,6 @@ public class SysRoleUser extends BaseEntity implements Serializable{
 
     private static final long serialVersionUID = 8545514045582235838L;
 
-    @TableId(type = IdType.AUTO)
     private Integer userId;
 
     private Integer roleId;

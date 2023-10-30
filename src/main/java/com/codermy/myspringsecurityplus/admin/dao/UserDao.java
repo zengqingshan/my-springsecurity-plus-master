@@ -53,17 +53,6 @@ public interface UserDao extends BaseMapper<SysUser> {
      */
     int updateUser(SysUser sysUser);
 
-
-
-//    /**
-//     * 插入用户
-//     * @param sysUser
-//     * @return
-//     */
-//    @Options(useGeneratedKeys = true, keyProperty = "userId")
-//    @Insert("insert into sys_user(type, dept_id, user_name, password, nick_name, phone, email, status, enabled) values(#{type}, #{deptId}, #{userName}, #{password}, #{nickName}, #{phone}, #{email}, #{status}, #{enabled})")
-//    int save(SysUser sysUser);
-
     /**
      * 通过id删除用户
      * @param userId

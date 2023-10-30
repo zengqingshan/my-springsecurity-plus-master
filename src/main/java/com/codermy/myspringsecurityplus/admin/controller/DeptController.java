@@ -59,7 +59,7 @@ public class DeptController {
     @ApiOperation(value = "添加部门页面")
     @PreAuthorize("hasAnyAuthority('dept:add')")
     public String addJob(Model model){
-        model.addAttribute("myDept",new SysDept());
+        model.addAttribute("sysDept",new SysDept());
         return "/system/dept/dept-add";
     }
 
@@ -81,7 +81,7 @@ public class DeptController {
     @ApiOperation(value = "修改部门页面")
     @PreAuthorize("hasAnyAuthority('dept:edit')")
     public String editPermission(Model model, SysDept dept) {
-        model.addAttribute("myDept",deptService.getDeptById(dept.getDeptId()));
+        model.addAttribute("sysDept",deptService.getDeptById(dept.getDeptId()));
         return "system/dept/dept-edit";
     }
 

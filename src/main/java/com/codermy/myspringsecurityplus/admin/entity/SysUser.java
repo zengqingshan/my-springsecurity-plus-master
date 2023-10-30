@@ -1,6 +1,7 @@
 package com.codermy.myspringsecurityplus.admin.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -42,7 +43,10 @@ public class SysUser extends BaseEntity{
         int VALID = 1;
     }
 
+    @TableField(exist = false)
     private Integer roleId;
+
+    @TableField(exist = false)
     /** 岗位组 */
     private Integer[] jobIds;
 

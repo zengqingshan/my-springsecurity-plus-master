@@ -20,13 +20,6 @@ public interface RoleMenuDao extends BaseMapper<SysRoleMenu> {
     @Update("UPDATE sys_role_menu SET enabled = 0 WHERE role_id = #{roleId}")
     int deleteRoleMenu(Integer roleId);
 
-//    /**
-//     * 新建角色与menu的联系
-//     * @param roleId
-//     * @param menuIds
-//     */
-//    void save(@Param("roleId")Integer roleId,@Param("menuIds") List<Integer> menuIds);
-
     /**
      * 通过role_id计算权限数量
      * @param id

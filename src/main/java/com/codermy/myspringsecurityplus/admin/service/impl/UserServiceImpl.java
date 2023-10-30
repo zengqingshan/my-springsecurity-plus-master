@@ -2,6 +2,7 @@ package com.codermy.myspringsecurityplus.admin.service.impl;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.codermy.myspringsecurityplus.admin.annotation.DataPermission;
 import com.codermy.myspringsecurityplus.admin.dao.RoleUserDao;
 import com.codermy.myspringsecurityplus.admin.dao.UserDao;
@@ -10,6 +11,7 @@ import com.codermy.myspringsecurityplus.admin.dao.UserJobDao;
 import com.codermy.myspringsecurityplus.admin.entity.SysRoleUser;
 import com.codermy.myspringsecurityplus.admin.entity.SysUser;
 import com.codermy.myspringsecurityplus.admin.entity.SysUserJob;
+import com.codermy.myspringsecurityplus.admin.service.UserJobService;
 import com.codermy.myspringsecurityplus.admin.service.UserService;
 import com.codermy.myspringsecurityplus.common.exceptionhandler.MyException;
 import com.codermy.myspringsecurityplus.common.utils.Result;
@@ -39,6 +41,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserJobDao userJobDao;
+
+    @Autowired
+    private UserJobService userJobService;
 
     // 获取所有用户
     @Override
@@ -101,7 +106,7 @@ public class UserServiceImpl implements UserService {
                 roleUserDao.updateMyRoleUser(sysRoleUser);
             }else {
                 sysRoleUser.setCreateBy(SecurityUtils.getCurrentUsername());
-                roleUserDao.save(sysRoleUser);
+                roleUserDao.insert(sysRoleUser);
             }
             userJobDao.deleteUserJobByUserId(sysUser.getUserId());
             insertUserPost(sysUser);
@@ -125,7 +130,7 @@ public class UserServiceImpl implements UserService {
             SysRoleUser sysRoleUser = new SysRoleUser();
             sysRoleUser.setRoleId(roleId);
             sysRoleUser.setUserId(sysUser.getUserId().intValue());
-            roleUserDao.save(sysRoleUser);
+            roleUserDao.insert(sysRoleUser);
             insertUserPost(sysUser);
             return Result.ok().message("添加成功，初始密码123456");
         }
@@ -169,7 +174,8 @@ public class UserServiceImpl implements UserService {
             }
             if (list.size() > 0)
             {
-                userJobDao.batchUserJob(list);
+//                userJobDao.batchUserJob(list);
+                userJobService.saveBatch(list, list.size());
             }
         }
         return;

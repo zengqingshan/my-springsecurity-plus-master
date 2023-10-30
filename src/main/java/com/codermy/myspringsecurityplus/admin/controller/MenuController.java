@@ -68,7 +68,7 @@ public class MenuController {
     @ApiOperation(value = "修改菜单页面")
     @PreAuthorize("hasAnyAuthority('menu:edit')")
     public String editPermission(Model model, SysMenu sysMenu) {
-        model.addAttribute("myMenu",menuService.getMenuById(sysMenu.getMenuId()));
+        model.addAttribute("MyMenu",menuService.getMenuById(sysMenu.getMenuId()));
         return "system/menu/menu-edit";
     }
 
@@ -86,7 +86,7 @@ public class MenuController {
     @ApiOperation(value = "添加菜单页面")
     @PreAuthorize("hasAnyAuthority('menu:add')")
     public String addMenu(Model model) {
-        model.addAttribute("myMenu",new SysMenu());
+        model.addAttribute("MyMenu",new SysMenu());
         return "system/menu/menu-add";
     }
 

@@ -17,7 +17,6 @@ public class SysUserJob extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 8925514045582235321L;
 
-    @TableId(type = IdType.AUTO)
     private Integer userId;
 
     private Integer jobId;

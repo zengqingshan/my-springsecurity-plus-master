@@ -56,7 +56,7 @@ public class RoleServiceImpl implements RoleService {
         List<Integer> menuIds = roleDto.getMenuIds();
         menuIds.remove(0L);
         //1、更新角色权限之前要删除该角色之前的所有权限
-        roleMenuDao.deleteRoleMenu(roleDto.getRoleId());
+        roleMenuDao.deleteById(roleDto.getRoleId());
         //2、判断该角色是否有赋予权限值，有就添加"
         if (!CollectionUtils.isEmpty(menuIds)) {
             for (Integer menuId:menuIds) {
@@ -115,7 +115,7 @@ public class RoleServiceImpl implements RoleService {
     public Result<SysRole> delete(Integer id) {
         List<SysRoleUser> tbRoleUsers = roleUserDao.listAllRoleUserByRoleId(id);
         if(tbRoleUsers.size() <= 0){
-            roleMenuDao.deleteRoleMenu(id);
+            roleMenuDao.deleteById(id);
             roleDao.delete(id);
             roleDeptDao.deleteRoleDept(id);
             return Result.ok().message("删除成功");

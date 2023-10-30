@@ -16,6 +16,7 @@ public class SysRoleMenu extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 8925514045582235875L;
 
+    @TableId
     private Integer roleId;
 
     private Integer menuId;

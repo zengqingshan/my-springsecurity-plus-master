@@ -52,7 +52,7 @@ public class UserController {
     @ApiOperation(value = "添加用户页面")
     @PreAuthorize("hasAnyAuthority('user:add')")
     public String addUser(Model model){
-        model.addAttribute("myUser",new SysUser());
+        model.addAttribute("sysUser",new SysUser());
         model.addAttribute("jobs",jobService.selectJobAll());
         return "system/user/user-add";
     }
@@ -78,7 +78,7 @@ public class UserController {
     @ApiOperation(value = "修改用户界面")
     @PreAuthorize("hasAnyAuthority('user:edit')")
     public String editUser(Model model, SysUser tbUser){
-        model.addAttribute("myUser",userService.getUserById(tbUser.getUserId()));
+        model.addAttribute("sysUser",userService.getUserById(tbUser.getUserId()));
         model.addAttribute("jobs",jobService.selectJobsByUserId(tbUser.getUserId()));
         return "system/user/user-edit";
     }
